@@ -1,0 +1,52 @@
+{
+  "campus": {
+    "nombre": "Campus Central",
+    "centro": { "lat": -34.6037, "lng": -58.3816 },
+    "zoomInicial": 16
+  },
+  "edificios": [
+    {
+      "id": "edif-b",
+      "nombre": "Edificio B",
+      "apodos": ["el de aulas", "edificio nuevo"],
+      "entrada": { "lat": -34.6039, "lng": -58.3820 },
+      "pisos": [
+        {
+          "numero": 1,
+          "etiqueta": "Planta Baja",
+          "plano": "/planos/edif-b-pb.svg",
+          "lugares": [
+            {
+              "id": "b-secretaria",
+              "nombre": "Secretaría de Alumnos",
+              "sinonimos": ["secretaria", "alumnado", "inscripciones"],
+              "tipo": "oficina",
+              "coord": { "x": 34.5, "y": 60.2 }
+            }
+          ]
+        },
+        {
+          "numero": 2,
+          "etiqueta": "Piso 2",
+          "plano": "/planos/edif-b-p2.svg",
+          "lugares": [
+            {
+              "id": "b-201",
+              "nombre": "Aula 201",
+              "sinonimos": ["201", "aula 201"],
+              "tipo": "aula",
+              "coord": { "x": 70.0, "y": 25.0 }
+            },
+            {
+              "id": "b-bano-2",
+              "nombre": "Baño Piso 2",
+              "sinonimos": ["bano", "toilette", "wc"],
+              "tipo": "bano",
+              "coord": { "x": 12.0, "y": 80.0 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
