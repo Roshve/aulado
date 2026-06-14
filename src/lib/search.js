@@ -52,15 +52,8 @@ export function crearBuscador(lugares) {
     threshold: FUSE_THRESHOLD,
     includeScore: true,
     shouldSort: true,
-    ignoreLocation: true,       // no penaliza posición del match
-    getFn: (obj, path) => {
-      // Fuse llama getFn para extraer el valor. Normalizamos aquí para que
-      // la comparación ya trabaje sobre strings sin acentos.
-      const val = Fuse.config.getFn(obj, path);
-      if (Array.isArray(val)) return val.map(normalizarQuery);
-      if (typeof val === 'string') return normalizarQuery(val);
-      return val ?? '';
-    },
+    ignoreLocation: true,
+    ignoreDiacritics: true,
   });
 }
 
