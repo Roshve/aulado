@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: '/aulado/',
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -13,7 +14,7 @@ export default defineConfig({
         theme_color: '#1a6fd8',
         background_color: '#f5f7fa',
         display: 'standalone',
-        start_url: '/',
+        start_url: '/aulado/',
         lang: 'es',
         icons: [
           {
