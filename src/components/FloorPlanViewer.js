@@ -52,7 +52,6 @@ export function FloorPlanViewer({ planoPiso, coord, nombre, onCerrar }) {
           >
             <div class="marker-pulse"></div>
             <div class="marker-dot"></div>
-            <div class="marker-label">${nombre}</div>
           </div>
         </div>
       </div>

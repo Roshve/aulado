@@ -1,48 +1,2223 @@
 {
   "campus": {
-    "nombre": "Campus Central",
-    "centro": { "lat": -34.6037, "lng": -58.3816 },
-    "zoomInicial": 16
+    "nombre": "TEC - Sede Campus",
+    "direccion": "Mozart 2300",
+    "centro": {
+      "lat": -34.6037,
+      "lng": -58.3816
+    },
+    "zoomInicial": 17
   },
   "edificios": [
     {
-      "id": "edif-b",
-      "nombre": "Edificio B",
-      "apodos": ["el de aulas", "edificio nuevo"],
-      "entrada": { "lat": -34.6039, "lng": -58.3820 },
+      "id": "campus-principal",
+      "nombre": "Edificio Principal",
+      "apodos": [
+        "tec",
+        "itecba",
+        "mozart",
+        "campus"
+      ],
+      "entrada": {
+        "lat": -34.6037,
+        "lng": -58.3816
+      },
       "pisos": [
         {
-          "numero": 1,
-          "etiqueta": "Planta Baja",
-          "plano": "/planos/edif-b-pb.svg",
+          "numero": -1,
+          "etiqueta": "Subsuelo",
+          "plano": "/planos/subsuelo.png",
           "lugares": [
             {
-              "id": "b-secretaria",
-              "nombre": "Secretaría de Alumnos",
-              "sinonimos": ["secretaria", "alumnado", "inscripciones"],
+              "id": "s-01",
+              "nombre": "Aula S-01",
+              "sinonimos": [
+                "s01",
+                "s 01",
+                "subsuelo 1"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 27.1,
+                "y": 60.7
+              }
+            },
+            {
+              "id": "s-02",
+              "nombre": "Aula S-02",
+              "sinonimos": [
+                "s02",
+                "s 02",
+                "subsuelo 2"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 27.0,
+                "y": 48.4
+              }
+            },
+            {
+              "id": "s-03",
+              "nombre": "Aula S-03",
+              "sinonimos": [
+                "s03",
+                "s 03",
+                "subsuelo 3"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 27.0,
+                "y": 36.4
+              }
+            },
+            {
+              "id": "s-04",
+              "nombre": "Aula S-04",
+              "sinonimos": [
+                "s04",
+                "s 04",
+                "subsuelo 4"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 27.0,
+                "y": 24.9
+              }
+            },
+            {
+              "id": "s-05",
+              "nombre": "Aula S-05",
+              "sinonimos": [
+                "s05",
+                "s 05",
+                "subsuelo 5"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 27.0,
+                "y": 12.7
+              }
+            },
+            {
+              "id": "s-06",
+              "nombre": "Aula S-06",
+              "sinonimos": [
+                "s06",
+                "s 06",
+                "subsuelo 6"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.6,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "s-07",
+              "nombre": "Aula S-07",
+              "sinonimos": [
+                "s07",
+                "s 07",
+                "subsuelo 7"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.6,
+                "y": 24.4
+              }
+            },
+            {
+              "id": "s-08",
+              "nombre": "Aula S-08",
+              "sinonimos": [
+                "s08",
+                "s 08",
+                "subsuelo 8"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 50.4,
+                "y": 19.9
+              }
+            },
+            {
+              "id": "s-09",
+              "nombre": "Aula S-09",
+              "sinonimos": [
+                "s09",
+                "s 09",
+                "subsuelo 9"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 62.0,
+                "y": 19.9
+              }
+            },
+            {
+              "id": "s-10",
+              "nombre": "Aula S-10",
+              "sinonimos": [
+                "s10",
+                "s 10",
+                "subsuelo 10"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 70.8,
+                "y": 26.4
+              }
+            },
+            {
+              "id": "s-11",
+              "nombre": "Aula S-11",
+              "sinonimos": [
+                "s11",
+                "s 11",
+                "subsuelo 11"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 70.7,
+                "y": 38.5
+              }
+            },
+            {
+              "id": "s-12",
+              "nombre": "Aula S-12",
+              "sinonimos": [
+                "s12",
+                "s 12",
+                "subsuelo 12"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 70.8,
+                "y": 48.8
+              }
+            },
+            {
+              "id": "s-13",
+              "nombre": "Aula S-13",
+              "sinonimos": [
+                "s13",
+                "s 13",
+                "subsuelo 13"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 62.0,
+                "y": 48.5
+              }
+            },
+            {
+              "id": "s-14",
+              "nombre": "Aula S-14",
+              "sinonimos": [
+                "s14",
+                "s 14",
+                "subsuelo 14"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 50.4,
+                "y": 48.1
+              }
+            },
+            {
+              "id": "s-15",
+              "nombre": "Aula S-15",
+              "sinonimos": [
+                "s15",
+                "s 15",
+                "subsuelo 15"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.6,
+                "y": 65.2
+              }
+            },
+            {
+              "id": "s-16",
+              "nombre": "Aula S-16",
+              "sinonimos": [
+                "s16",
+                "s 16",
+                "subsuelo 16"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.6,
+                "y": 76.7
+              }
+            }
+          ]
+        },
+        {
+          "numero": 0,
+          "etiqueta": "Planta Baja",
+          "plano": "/planos/planta-baja.png",
+          "lugares": [
+            {
+              "id": "pb-20",
+              "nombre": "Aula 20",
+              "sinonimos": [
+                "20",
+                "aula 20"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 21.9,
+                "y": 83.3
+              }
+            },
+            {
+              "id": "pb-21",
+              "nombre": "Aula 21",
+              "sinonimos": [
+                "21",
+                "aula 21"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 28.2,
+                "y": 93.0
+              }
+            },
+            {
+              "id": "pb-22",
+              "nombre": "Aula 22",
+              "sinonimos": [
+                "22",
+                "aula 22"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 31.8,
+                "y": 93.0
+              }
+            },
+            {
+              "id": "pb-26",
+              "nombre": "Aula 26",
+              "sinonimos": [
+                "26",
+                "aula 26"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 11.4,
+                "y": 93.1
+              }
+            },
+            {
+              "id": "pb-27",
+              "nombre": "Aula 27",
+              "sinonimos": [
+                "27",
+                "aula 27"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 6.5,
+                "y": 83.5
+              }
+            },
+            {
+              "id": "pb-28",
+              "nombre": "Aula 28",
+              "sinonimos": [
+                "28",
+                "aula 28"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 6.7,
+                "y": 93.1
+              }
+            },
+            {
+              "id": "pb-29",
+              "nombre": "Aula 29",
+              "sinonimos": [
+                "29",
+                "aula 29"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 24.9,
+                "y": 93.0
+              }
+            },
+            {
+              "id": "pb-34",
+              "nombre": "Aula 34",
+              "sinonimos": [
+                "34",
+                "aula 34"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 68.0,
+                "y": 42.1
+              }
+            },
+            {
+              "id": "pb-35",
+              "nombre": "Aula 35",
+              "sinonimos": [
+                "35",
+                "aula 35"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 73.6,
+                "y": 42.3
+              }
+            },
+            {
+              "id": "pb-36",
+              "nombre": "Aula 36",
+              "sinonimos": [
+                "36",
+                "aula 36"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 78.6,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "pb-37",
+              "nombre": "Aula 37",
+              "sinonimos": [
+                "37",
+                "aula 37"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 76.0,
+                "y": 51.1
+              }
+            },
+            {
+              "id": "pb-38",
+              "nombre": "Aula 38",
+              "sinonimos": [
+                "38",
+                "aula 38"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 70.1,
+                "y": 51.0
+              }
+            },
+            {
+              "id": "pb-39",
+              "nombre": "Aula 39",
+              "sinonimos": [
+                "39",
+                "aula 39"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 65.5,
+                "y": 51.0
+              }
+            },
+            {
+              "id": "pb-40",
+              "nombre": "Aula 40",
+              "sinonimos": [
+                "40",
+                "aula 40"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 60.9,
+                "y": 51.0
+              }
+            },
+            {
+              "id": "pb-4",
+              "nombre": "Aula 4",
+              "sinonimos": [
+                "4",
+                "aula 4"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 52.0,
+                "y": 58.9
+              }
+            },
+            {
+              "id": "pb-50",
+              "nombre": "Aula 50",
+              "sinonimos": [
+                "50",
+                "aula 50"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 34.9
+              }
+            },
+            {
+              "id": "pb-51",
+              "nombre": "Aula 51",
+              "sinonimos": [
+                "51",
+                "aula 51"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 29.1
+              }
+            },
+            {
+              "id": "pb-52",
+              "nombre": "Aula 52",
+              "sinonimos": [
+                "52",
+                "aula 52"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 23.3
+              }
+            },
+            {
+              "id": "pb-53",
+              "nombre": "Aula 53",
+              "sinonimos": [
+                "53",
+                "aula 53"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 17.5
+              }
+            },
+            {
+              "id": "pb-54",
+              "nombre": "Aula 54",
+              "sinonimos": [
+                "54",
+                "aula 54"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 11.7
+              }
+            },
+            {
+              "id": "pb-55",
+              "nombre": "Aula 55",
+              "sinonimos": [
+                "55",
+                "aula 55"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.5,
+                "y": 11.6
+              }
+            },
+            {
+              "id": "pb-56",
+              "nombre": "Aula 56",
+              "sinonimos": [
+                "56",
+                "aula 56"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.5,
+                "y": 17.5
+              }
+            },
+            {
+              "id": "pb-57",
+              "nombre": "Aula 57",
+              "sinonimos": [
+                "57",
+                "aula 57"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.5,
+                "y": 23.4
+              }
+            },
+            {
+              "id": "pb-58",
+              "nombre": "Aula 58",
+              "sinonimos": [
+                "58",
+                "aula 58"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.5,
+                "y": 29.3
+              }
+            },
+            {
+              "id": "pb-59",
+              "nombre": "Aula 59",
+              "sinonimos": [
+                "59",
+                "aula 59"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.5,
+                "y": 35.0
+              }
+            },
+            {
+              "id": "pb-60",
+              "nombre": "Aula 60",
+              "sinonimos": [
+                "60",
+                "aula 60"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.6,
+                "y": 56.9
+              }
+            },
+            {
+              "id": "pb-61",
+              "nombre": "Aula 61",
+              "sinonimos": [
+                "61",
+                "aula 61"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.6,
+                "y": 71.2
+              }
+            },
+            {
+              "id": "pb-62",
+              "nombre": "Aula 62",
+              "sinonimos": [
+                "62",
+                "aula 62"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 92.6,
+                "y": 77.6
+              }
+            },
+            {
+              "id": "pb-63",
+              "nombre": "Aula 63",
+              "sinonimos": [
+                "63",
+                "aula 63"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 77.3
+              }
+            },
+            {
+              "id": "pb-64",
+              "nombre": "Aula 64",
+              "sinonimos": [
+                "64",
+                "aula 64"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 71.3
+              }
+            },
+            {
+              "id": "pb-65",
+              "nombre": "Aula 65",
+              "sinonimos": [
+                "65",
+                "aula 65"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 61.5
+              }
+            },
+            {
+              "id": "pb-66",
+              "nombre": "Aula 66",
+              "sinonimos": [
+                "66",
+                "aula 66"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 55.7
+              }
+            },
+            {
+              "id": "pb-67",
+              "nombre": "Aula 67",
+              "sinonimos": [
+                "67",
+                "aula 67"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 49.9
+              }
+            },
+            {
+              "id": "pb-68",
+              "nombre": "Aula 68",
+              "sinonimos": [
+                "68",
+                "aula 68"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 85.2,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "pb-hall",
+              "nombre": "Hall de Entrada",
+              "sinonimos": [
+                "entrada",
+                "hall",
+                "acceso",
+                "mozart 2300",
+                "puerta principal"
+              ],
+              "tipo": "acceso",
+              "coord": {
+                "x": 52,
+                "y": 96
+              }
+            },
+            {
+              "id": "pb-bedelia",
+              "nombre": "Bedelía",
+              "sinonimos": [
+                "bedelia",
+                "secretaria",
+                "tramites",
+                "actas"
+              ],
               "tipo": "oficina",
-              "coord": { "x": 34.5, "y": 60.2 }
+              "coord": {
+                "x": 48,
+                "y": 82
+              }
+            },
+            {
+              "id": "pb-direccion",
+              "nombre": "Dirección de Alumnos",
+              "sinonimos": [
+                "direccion alumnos",
+                "gestion academica",
+                "DAE"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 54,
+                "y": 82
+              }
+            },
+            {
+              "id": "pb-sae",
+              "nombre": "SAE",
+              "sinonimos": [
+                "sae",
+                "servicio asistencia estudiantil",
+                "asistencia"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 52,
+                "y": 75
+              }
+            },
+            {
+              "id": "pb-aula-pearson",
+              "nombre": "Aula Pearson",
+              "sinonimos": [
+                "pearson",
+                "aula pearson",
+                "sala pearson"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 84.6,
+                "y": 88.1
+              }
+            },
+            {
+              "id": "pb-ciie",
+              "nombre": "C.I.I.E",
+              "sinonimos": [
+                "ciie",
+                "centro idiomas",
+                "idiomas"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 65,
+                "y": 75
+              }
+            },
+            {
+              "id": "pb-lab-naval",
+              "nombre": "Laboratorio de Naval",
+              "sinonimos": [
+                "laboratorio naval",
+                "lab naval",
+                "naval"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 72,
+                "y": 75
+              }
+            },
+            {
+              "id": "pb-udb-mat",
+              "nombre": "U.D.B Matemática",
+              "sinonimos": [
+                "udb matematica",
+                "matematica",
+                "departamento matematica"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 57,
+                "y": 82
+              }
+            },
+            {
+              "id": "pb-lab-quimica-pb",
+              "nombre": "Laboratorio Química",
+              "sinonimos": [
+                "laboratorio quimica",
+                "lab quimica",
+                "quimica"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 65,
+                "y": 82
+              }
+            },
+            {
+              "id": "pb-sala-profesores",
+              "nombre": "Sala de Profesores",
+              "sinonimos": [
+                "sala profesores",
+                "profesores",
+                "docentes",
+                "sala docentes"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 55,
+                "y": 40
+              }
+            },
+            {
+              "id": "pb-buffet",
+              "nombre": "Buffet",
+              "sinonimos": [
+                "buffet",
+                "comedor",
+                "cafeteria",
+                "cantina",
+                "comer"
+              ],
+              "tipo": "cafeteria",
+              "coord": {
+                "x": 48,
+                "y": 22
+              }
+            },
+            {
+              "id": "pb-kiosco",
+              "nombre": "Kiosco",
+              "sinonimos": [
+                "kiosco",
+                "kiosko",
+                "snack"
+              ],
+              "tipo": "cafeteria",
+              "coord": {
+                "x": 40,
+                "y": 45
+              }
+            },
+            {
+              "id": "pb-ceit",
+              "nombre": "CEIT",
+              "sinonimos": [
+                "ceit",
+                "centro informatica",
+                "impresion"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 40,
+                "y": 53
+              }
+            },
+            {
+              "id": "pb-fotocopiadora",
+              "nombre": "Fotocopiadora",
+              "sinonimos": [
+                "fotocopiadora",
+                "fotocopias",
+                "fotocopiado",
+                "copias"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 40,
+                "y": 60
+              }
+            },
+            {
+              "id": "pb-sala-streaming",
+              "nombre": "Sala de Streaming",
+              "sinonimos": [
+                "streaming",
+                "sala streaming",
+                "sala grabacion"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 40,
+                "y": 68
+              }
+            },
+            {
+              "id": "pb-ascensor",
+              "nombre": "Ascensor",
+              "sinonimos": [
+                "ascensor",
+                "elevador",
+                "lift"
+              ],
+              "tipo": "acceso",
+              "coord": {
+                "x": 40,
+                "y": 75
+              }
+            },
+            {
+              "id": "pb-agua",
+              "nombre": "Agua Caliente",
+              "sinonimos": [
+                "agua caliente",
+                "agua",
+                "termo",
+                "mate"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 47,
+                "y": 55
+              }
+            },
+            {
+              "id": "pb-bicicletero",
+              "nombre": "Bicicletero",
+              "sinonimos": [
+                "bicicletero",
+                "bicicleta",
+                "bici",
+                "estacionar bici"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 46,
+                "y": 90
+              }
+            },
+            {
+              "id": "pb-seguridad",
+              "nombre": "Seguridad",
+              "sinonimos": [
+                "seguridad",
+                "guardia",
+                "porteria"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 58,
+                "y": 90
+              }
+            },
+            {
+              "id": "pb-udb-fisica",
+              "nombre": "U.D.B Física",
+              "sinonimos": [
+                "udb fisica",
+                "fisica",
+                "departamento fisica"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 8,
+                "y": 12
+              }
+            },
+            {
+              "id": "pb-edif-fisica",
+              "nombre": "Edificio de Física",
+              "sinonimos": [
+                "edificio fisica",
+                "edif fisica"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 18,
+                "y": 12
+              }
+            },
+            {
+              "id": "pb-lab-civil-pb",
+              "nombre": "Laboratorio Civil",
+              "sinonimos": [
+                "laboratorio civil pb",
+                "lab civil planta baja"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 57,
+                "y": 8
+              }
+            },
+            {
+              "id": "pb-lab-electrica",
+              "nombre": "Laboratorio Eléctrica",
+              "sinonimos": [
+                "laboratorio electrica",
+                "lab electrica",
+                "electricidad"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 67,
+                "y": 8
+              }
+            },
+            {
+              "id": "pb-lab-mecanica",
+              "nombre": "Laboratorio Mecánica",
+              "sinonimos": [
+                "laboratorio mecanica",
+                "lab mecanica",
+                "mecanica"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 77,
+                "y": 8
+              }
+            },
+            {
+              "id": "pb-bano-pb",
+              "nombre": "Baños Planta Baja",
+              "sinonimos": [
+                "bano",
+                "banos",
+                "sanitarios",
+                "wc",
+                "toilette"
+              ],
+              "tipo": "bano",
+              "coord": {
+                "x": 48,
+                "y": 14
+              }
+            },
+            {
+              "id": "pb-bano-docente",
+              "nombre": "Sanitario Docente",
+              "sinonimos": [
+                "bano docente",
+                "sanitario docente",
+                "bano profesores"
+              ],
+              "tipo": "bano",
+              "coord": {
+                "x": 48,
+                "y": 40
+              }
+            }
+          ]
+        },
+        {
+          "numero": 1,
+          "etiqueta": "1er Piso",
+          "plano": "/planos/primer-piso.png",
+          "lugares": [
+            {
+              "id": "p1-101",
+              "nombre": "Aula 101",
+              "sinonimos": [
+                "101",
+                "aula 101"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.2,
+                "y": 73.5
+              }
+            },
+            {
+              "id": "p1-102",
+              "nombre": "Aula 102",
+              "sinonimos": [
+                "102",
+                "aula 102"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.4,
+                "y": 66.2
+              }
+            },
+            {
+              "id": "p1-103",
+              "nombre": "Aula 103",
+              "sinonimos": [
+                "103",
+                "aula 103"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 41.4,
+                "y": 59.1
+              }
+            },
+            {
+              "id": "p1-104",
+              "nombre": "Aula 104",
+              "sinonimos": [
+                "104",
+                "aula 104"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 49.6,
+                "y": 60.7
+              }
+            },
+            {
+              "id": "p1-105",
+              "nombre": "Aula 105",
+              "sinonimos": [
+                "105",
+                "aula 105"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 52.5,
+                "y": 68.8
+              }
+            },
+            {
+              "id": "p1-108",
+              "nombre": "Aula 108",
+              "sinonimos": [
+                "108",
+                "aula 108"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 58.0,
+                "y": 72.4
+              }
+            },
+            {
+              "id": "p1-109",
+              "nombre": "Aula 109",
+              "sinonimos": [
+                "109",
+                "aula 109"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 63.9,
+                "y": 72.5
+              }
+            },
+            {
+              "id": "p1-110",
+              "nombre": "Aula 110",
+              "sinonimos": [
+                "110",
+                "aula 110"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 69.4,
+                "y": 72.5
+              }
+            },
+            {
+              "id": "p1-113",
+              "nombre": "Aula 113",
+              "sinonimos": [
+                "113",
+                "aula 113"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 70.0,
+                "y": 83.4
+              }
+            },
+            {
+              "id": "p1-114",
+              "nombre": "Aula 114",
+              "sinonimos": [
+                "114",
+                "aula 114"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 63.9,
+                "y": 83.2
+              }
+            },
+            {
+              "id": "p1-115",
+              "nombre": "Aula 115",
+              "sinonimos": [
+                "115",
+                "aula 115"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 58.4,
+                "y": 83.4
+              }
+            },
+            {
+              "id": "p1-116",
+              "nombre": "Aula 116",
+              "sinonimos": [
+                "116",
+                "aula 116"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 52.5,
+                "y": 83.4
+              }
+            },
+            {
+              "id": "p1-117",
+              "nombre": "Aula 117",
+              "sinonimos": [
+                "117",
+                "aula 117"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 3.9,
+                "y": 81.7
+              }
+            },
+            {
+              "id": "p1-131",
+              "nombre": "Aula 131",
+              "sinonimos": [
+                "131",
+                "aula 131"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 49.4,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "p1-132",
+              "nombre": "Aula 132",
+              "sinonimos": [
+                "132",
+                "aula 132"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 55.2,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "p1-133",
+              "nombre": "Aula 133",
+              "sinonimos": [
+                "133",
+                "aula 133"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 60.9,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "p1-134",
+              "nombre": "Aula 134",
+              "sinonimos": [
+                "134",
+                "aula 134"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 66.9,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "p1-135",
+              "nombre": "Aula 135",
+              "sinonimos": [
+                "135",
+                "aula 135"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 72.5,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "p1-138",
+              "nombre": "Aula 138",
+              "sinonimos": [
+                "138",
+                "aula 138"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 70.6,
+                "y": 53.0
+              }
+            },
+            {
+              "id": "p1-139",
+              "nombre": "Aula 139",
+              "sinonimos": [
+                "139",
+                "aula 139"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 65.7,
+                "y": 53.0
+              }
+            },
+            {
+              "id": "p1-140",
+              "nombre": "Aula 140",
+              "sinonimos": [
+                "140",
+                "aula 140"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 61.0,
+                "y": 53.0
+              }
+            },
+            {
+              "id": "p1-150",
+              "nombre": "Aula 150",
+              "sinonimos": [
+                "150",
+                "aula 150"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.0,
+                "y": 41.2
+              }
+            },
+            {
+              "id": "p1-151",
+              "nombre": "Aula 151",
+              "sinonimos": [
+                "151",
+                "aula 151"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.0,
+                "y": 35.5
+              }
+            },
+            {
+              "id": "p1-152",
+              "nombre": "Aula 152",
+              "sinonimos": [
+                "152",
+                "aula 152"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.0,
+                "y": 29.7
+              }
+            },
+            {
+              "id": "p1-153",
+              "nombre": "Aula 153",
+              "sinonimos": [
+                "153",
+                "aula 153"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.0,
+                "y": 23.9
+              }
+            },
+            {
+              "id": "p1-156",
+              "nombre": "Aula 156",
+              "sinonimos": [
+                "156",
+                "aula 156"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 93.3,
+                "y": 23.8
+              }
+            },
+            {
+              "id": "p1-157",
+              "nombre": "Aula 157",
+              "sinonimos": [
+                "157",
+                "aula 157"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 93.3,
+                "y": 29.6
+              }
+            },
+            {
+              "id": "p1-158",
+              "nombre": "Aula 158",
+              "sinonimos": [
+                "158",
+                "aula 158"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 93.3,
+                "y": 35.6
+              }
+            },
+            {
+              "id": "p1-159",
+              "nombre": "Aula 159",
+              "sinonimos": [
+                "159",
+                "aula 159"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 93.3,
+                "y": 41.4
+              }
+            },
+            {
+              "id": "p1-161",
+              "nombre": "Aula 161",
+              "sinonimos": [
+                "161",
+                "aula 161"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 93.7,
+                "y": 83.7
+              }
+            },
+            {
+              "id": "p1-162",
+              "nombre": "Aula 162",
+              "sinonimos": [
+                "162",
+                "aula 162"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 93.7,
+                "y": 77.5
+              }
+            },
+            {
+              "id": "p1-163",
+              "nombre": "Aula 163",
+              "sinonimos": [
+                "163",
+                "aula 163"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 69.5,
+                "y": 94.5
+              }
+            },
+            {
+              "id": "p1-164",
+              "nombre": "Aula 164",
+              "sinonimos": [
+                "164",
+                "aula 164"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.2,
+                "y": 83.7
+              }
+            },
+            {
+              "id": "p1-165",
+              "nombre": "Aula 165",
+              "sinonimos": [
+                "165",
+                "aula 165"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.2,
+                "y": 67.8
+              }
+            },
+            {
+              "id": "p1-166",
+              "nombre": "Aula 166",
+              "sinonimos": [
+                "166",
+                "aula 166"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.2,
+                "y": 62.0
+              }
+            },
+            {
+              "id": "p1-167",
+              "nombre": "Aula 167",
+              "sinonimos": [
+                "167",
+                "aula 167"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.2,
+                "y": 56.2
+              }
+            },
+            {
+              "id": "p1-168",
+              "nombre": "Aula 168",
+              "sinonimos": [
+                "168",
+                "aula 168"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 86.2,
+                "y": 50.2
+              }
+            },
+            {
+              "id": "p1-118",
+              "nombre": "Auditorio",
+              "sinonimos": [
+                "auditorio",
+                "118",
+                "aula magna",
+                "sala de actos"
+              ],
+              "tipo": "auditorio",
+              "coord": {
+                "x": 10,
+                "y": 92
+              }
+            },
+            {
+              "id": "p1-consultorio",
+              "nombre": "Consultorio Médico",
+              "sinonimos": [
+                "medico",
+                "consultorio",
+                "enfermeria",
+                "salud",
+                "doctor"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 18,
+                "y": 92
+              }
+            },
+            {
+              "id": "p1-biblioteca",
+              "nombre": "Biblioteca",
+              "sinonimos": [
+                "biblioteca",
+                "libros",
+                "biblio"
+              ],
+              "tipo": "biblioteca",
+              "coord": {
+                "x": 30,
+                "y": 92
+              }
+            },
+            {
+              "id": "p1-lab-info",
+              "nombre": "Laboratorio Informática",
+              "sinonimos": [
+                "laboratorio informatica",
+                "lab informatica",
+                "lab info",
+                "pc",
+                "computadoras"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 22,
+                "y": 82
+              }
+            },
+            {
+              "id": "p1-lactario",
+              "nombre": "Lactario",
+              "sinonimos": [
+                "lactario",
+                "lactancia",
+                "sala lactancia"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 44,
+                "y": 80
+              }
+            },
+            {
+              "id": "p1-ddb-quimica",
+              "nombre": "D.D.B Química",
+              "sinonimos": [
+                "ddb quimica",
+                "departamento quimica",
+                "quimica"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 72,
+                "y": 92
+              }
+            },
+            {
+              "id": "p1-cs-basicas",
+              "nombre": "Departamento de Ciencias Básicas",
+              "sinonimos": [
+                "ciencias basicas",
+                "depto ciencias basicas",
+                "fisica quimica matematica"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 75,
+                "y": 82
+              }
+            },
+            {
+              "id": "p1-depto-civil",
+              "nombre": "Departamento de Civil",
+              "sinonimos": [
+                "depto civil",
+                "departamento civil",
+                "ingenieria civil"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 72,
+                "y": 60
+              }
+            },
+            {
+              "id": "p1-lab-civil-p1",
+              "nombre": "Laboratorio Civil",
+              "sinonimos": [
+                "laboratorio civil 1er piso",
+                "lab civil piso 1"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 78,
+                "y": 44
+              }
+            },
+            {
+              "id": "p1-depto-elec",
+              "nombre": "Departamento Eléctrica",
+              "sinonimos": [
+                "depto electrica",
+                "departamento electrica",
+                "ingenieria electrica"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 88,
+                "y": 30
+              }
+            },
+            {
+              "id": "p1-coord-ingreso",
+              "nombre": "Coordinación Ingreso",
+              "sinonimos": [
+                "coordinacion ingreso",
+                "ingreso",
+                "coordinacion",
+                "primer año"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 93,
+                "y": 73
+              }
+            },
+            {
+              "id": "p1-ascensor",
+              "nombre": "Ascensor",
+              "sinonimos": [
+                "ascensor",
+                "elevador",
+                "lift"
+              ],
+              "tipo": "acceso",
+              "coord": {
+                "x": 35,
+                "y": 72
+              }
+            },
+            {
+              "id": "p1-bano-p1",
+              "nombre": "Baños 1er Piso",
+              "sinonimos": [
+                "bano",
+                "banos",
+                "sanitarios",
+                "wc",
+                "toilette"
+              ],
+              "tipo": "bano",
+              "coord": {
+                "x": 48,
+                "y": 55
+              }
+            },
+            {
+              "id": "p1-agua",
+              "nombre": "Agua Caliente",
+              "sinonimos": [
+                "agua caliente",
+                "agua",
+                "termo",
+                "mate"
+              ],
+              "tipo": "servicio",
+              "coord": {
+                "x": 36,
+                "y": 55
+              }
             }
           ]
         },
         {
           "numero": 2,
-          "etiqueta": "Piso 2",
-          "plano": "/planos/edif-b-p2.svg",
+          "etiqueta": "2do Piso",
+          "plano": "/planos/segundo-piso.png",
           "lugares": [
             {
-              "id": "b-201",
-              "nombre": "Aula 201",
-              "sinonimos": ["201", "aula 201"],
+              "id": "p2-231",
+              "nombre": "Aula 231",
+              "sinonimos": [
+                "231",
+                "aula 231"
+              ],
               "tipo": "aula",
-              "coord": { "x": 70.0, "y": 25.0 }
+              "coord": {
+                "x": 46.4,
+                "y": 44.1
+              }
             },
             {
-              "id": "b-bano-2",
-              "nombre": "Baño Piso 2",
-              "sinonimos": ["bano", "toilette", "wc"],
+              "id": "p2-232",
+              "nombre": "Aula 232",
+              "sinonimos": [
+                "232",
+                "aula 232"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 52.5,
+                "y": 44.1
+              }
+            },
+            {
+              "id": "p2-233",
+              "nombre": "Aula 233",
+              "sinonimos": [
+                "233",
+                "aula 233"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 58.4,
+                "y": 44.1
+              }
+            },
+            {
+              "id": "p2-234",
+              "nombre": "Aula 234",
+              "sinonimos": [
+                "234",
+                "aula 234"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 64.0,
+                "y": 44.0
+              }
+            },
+            {
+              "id": "p2-235",
+              "nombre": "Aula 235",
+              "sinonimos": [
+                "235",
+                "aula 235"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 71.0,
+                "y": 44.1
+              }
+            },
+            {
+              "id": "p2-236",
+              "nombre": "Aula 236",
+              "sinonimos": [
+                "236",
+                "aula 236"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 76.3,
+                "y": 45.9
+              }
+            },
+            {
+              "id": "p2-237",
+              "nombre": "Aula 237",
+              "sinonimos": [
+                "237",
+                "aula 237"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 75.2,
+                "y": 53.1
+              }
+            },
+            {
+              "id": "p2-238",
+              "nombre": "Aula 238",
+              "sinonimos": [
+                "238",
+                "aula 238"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 69.0,
+                "y": 53.0
+              }
+            },
+            {
+              "id": "p2-239",
+              "nombre": "Aula 239",
+              "sinonimos": [
+                "239",
+                "aula 239"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 63.2,
+                "y": 53.0
+              }
+            },
+            {
+              "id": "p2-240",
+              "nombre": "Aula 240",
+              "sinonimos": [
+                "240",
+                "aula 240"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 57.5,
+                "y": 53.0
+              }
+            },
+            {
+              "id": "p2-261",
+              "nombre": "Aula 261",
+              "sinonimos": [
+                "261",
+                "aula 261"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 45.4,
+                "y": 59.2
+              }
+            },
+            {
+              "id": "p2-262",
+              "nombre": "Aula 262",
+              "sinonimos": [
+                "262",
+                "aula 262"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 45.6,
+                "y": 67.4
+              }
+            },
+            {
+              "id": "p2-267",
+              "nombre": "Aula 267",
+              "sinonimos": [
+                "267",
+                "aula 267"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 58.3,
+                "y": 75.2
+              }
+            },
+            {
+              "id": "p2-268",
+              "nombre": "Aula 268",
+              "sinonimos": [
+                "268",
+                "aula 268"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 63.4,
+                "y": 75.2
+              }
+            },
+            {
+              "id": "p2-269",
+              "nombre": "Aula 269",
+              "sinonimos": [
+                "269",
+                "aula 269"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 68.1,
+                "y": 75.1
+              }
+            },
+            {
+              "id": "p2-270",
+              "nombre": "Aula 270",
+              "sinonimos": [
+                "270",
+                "aula 270"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 72.5,
+                "y": 75.2
+              }
+            },
+            {
+              "id": "p2-273",
+              "nombre": "Aula 273",
+              "sinonimos": [
+                "273",
+                "aula 273"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 72.6,
+                "y": 85.5
+              }
+            },
+            {
+              "id": "p2-274",
+              "nombre": "Aula 274",
+              "sinonimos": [
+                "274",
+                "aula 274"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 69.2,
+                "y": 85.5
+              }
+            },
+            {
+              "id": "p2-275",
+              "nombre": "Aula 275",
+              "sinonimos": [
+                "275",
+                "aula 275"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 65.2,
+                "y": 85.6
+              }
+            },
+            {
+              "id": "p2-276",
+              "nombre": "Aula 276",
+              "sinonimos": [
+                "276",
+                "aula 276"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 61.4,
+                "y": 85.5
+              }
+            },
+            {
+              "id": "p2-277",
+              "nombre": "Aula 277",
+              "sinonimos": [
+                "277",
+                "aula 277"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 57.0,
+                "y": 85.4
+              }
+            },
+            {
+              "id": "p2-278",
+              "nombre": "Aula 278",
+              "sinonimos": [
+                "278",
+                "aula 278"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 53.2,
+                "y": 85.5
+              }
+            },
+            {
+              "id": "p2-280",
+              "nombre": "Aula 280",
+              "sinonimos": [
+                "280",
+                "aula 280"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 44.8,
+                "y": 85.4
+              }
+            },
+            {
+              "id": "p2-282",
+              "nombre": "Aula 282",
+              "sinonimos": [
+                "282",
+                "aula 282"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 36.5,
+                "y": 73.7
+              }
+            },
+            {
+              "id": "p2-283",
+              "nombre": "Aula 283",
+              "sinonimos": [
+                "283",
+                "aula 283"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 36.5,
+                "y": 66.2
+              }
+            },
+            {
+              "id": "p2-284",
+              "nombre": "Aula 284",
+              "sinonimos": [
+                "284",
+                "aula 284"
+              ],
+              "tipo": "aula",
+              "coord": {
+                "x": 36.5,
+                "y": 58.9
+              }
+            },
+            {
+              "id": "p2-multilab",
+              "nombre": "Multilab",
+              "sinonimos": [
+                "multilab",
+                "laboratorio multiple",
+                "lab multiple",
+                "sala multiple"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 45,
+                "y": 78
+              }
+            },
+            {
+              "id": "p2-impresion3d",
+              "nombre": "Impresión 3D",
+              "sinonimos": [
+                "impresion 3d",
+                "3d",
+                "impresora 3d",
+                "prototipado"
+              ],
+              "tipo": "laboratorio",
+              "coord": {
+                "x": 52,
+                "y": 78
+              }
+            },
+            {
+              "id": "p2-udb-cultura",
+              "nombre": "U.D.B Cultura e Idioma",
+              "sinonimos": [
+                "udb cultura",
+                "cultura e idioma",
+                "idiomas",
+                "cultura",
+                "ingles",
+                "lengua"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 35,
+                "y": 82
+              }
+            },
+            {
+              "id": "p2-udb-economia",
+              "nombre": "U.D.B Economía y Legislación",
+              "sinonimos": [
+                "udb economia",
+                "economia y legislacion",
+                "economia",
+                "legislacion",
+                "derecho"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 85,
+                "y": 78
+              }
+            },
+            {
+              "id": "p2-graduados",
+              "nombre": "Graduados",
+              "sinonimos": [
+                "graduados",
+                "egresados",
+                "oficina graduados",
+                "posgrado"
+              ],
+              "tipo": "oficina",
+              "coord": {
+                "x": 85,
+                "y": 89
+              }
+            },
+            {
+              "id": "p2-ascensor",
+              "nombre": "Ascensor",
+              "sinonimos": [
+                "ascensor",
+                "elevador",
+                "lift"
+              ],
+              "tipo": "acceso",
+              "coord": {
+                "x": 30,
+                "y": 72
+              }
+            },
+            {
+              "id": "p2-bano-p2",
+              "nombre": "Baños 2do Piso",
+              "sinonimos": [
+                "bano",
+                "banos",
+                "sanitarios",
+                "wc",
+                "toilette"
+              ],
               "tipo": "bano",
-              "coord": { "x": 12.0, "y": 80.0 }
+              "coord": {
+                "x": 52,
+                "y": 53
+              }
             }
           ]
         }

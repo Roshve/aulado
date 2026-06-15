@@ -41,7 +41,7 @@ export default defineConfig({
         // la primera visita funcione y posteriores visitas offline también.
         runtimeCaching: [
           {
-            urlPattern: /\/planos\/.+\.svg$/,
+            urlPattern: /\/planos\/.+\.(svg|png)$/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'aulado-planos',
