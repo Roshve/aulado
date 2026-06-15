@@ -8,7 +8,7 @@
  *
  * Estado:
  *   query        {string}              texto actual del buscador
- *   tipoFiltro   {string|null}         filtro activo por tipo de lugar
+ *   tiposFiltro  {string[]}            tipos activos para filtrar (OR)
  *   seleccionado {Object|null}         lugar enriquecido actualmente elegido
  *   vista        {'buscar'|'ficha'|'plano'}
  *   favoritos    {Set<string>}         IDs marcados como favorito (mirror de localStorage)
@@ -18,7 +18,7 @@ import { useState, useMemo, useEffect } from 'preact/hooks';
 
 import campusData from '../data/campus.json';
 import { aplanarLugares, getLugarById } from '../lib/campus.js';
-import { crearBuscador, buscar } from '../lib/search.js';
+import { crearBuscador, filtrarLugares } from '../lib/search.js';
 import { getFavoritos, toggleFavorito } from '../lib/favorites.js';
 import { agregarReciente, getRecientes } from '../lib/recents.js';
 import { SearchBar } from './SearchBar.js';
@@ -39,7 +39,7 @@ function parseHash() {
 
 export function App() {
   const [query, setQuery] = useState('');
-  const [tipoFiltro, setTipoFiltro] = useState(null);
+  const [tiposFiltro, setTiposFiltro] = useState([]);
   const [seleccionado, setSeleccionado] = useState(null);
   const [vista, setVista] = useState('buscar');
   const [favoritos, setFavoritos] = useState(() => getFavoritos());
@@ -81,14 +81,9 @@ export function App() {
     history.pushState(null, '', `${location.pathname}#/${segment}/${lugar.id}`);
   }
 
-  // Resultados de búsqueda reactivos
-  const resultadosBrutos = useMemo(
-    () => buscar(fuse, query, todosLugares),
-    [query],
-  );
   const resultados = useMemo(
-    () => (tipoFiltro ? resultadosBrutos.filter((l) => l.tipo === tipoFiltro) : resultadosBrutos),
-    [resultadosBrutos, tipoFiltro],
+    () => filtrarLugares(fuse, query, todosLugares, tiposFiltro),
+    [query, tiposFiltro],
   );
 
   function handleSeleccion(lugar) {
@@ -134,8 +129,8 @@ export function App() {
           <${SearchBar}
             query=${query}
             onQuery=${setQuery}
-            tipoFiltro=${tipoFiltro}
-            onTipoFiltro=${setTipoFiltro}
+            tiposFiltro=${tiposFiltro}
+            onTiposFiltro=${setTiposFiltro}
             resultados=${resultados}
             todosLugares=${todosLugares}
             onSeleccion=${handleSeleccion}

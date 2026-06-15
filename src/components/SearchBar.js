@@ -2,23 +2,24 @@
  * SearchBar.js — input de búsqueda + filtros por tipo + lista de resultados.
  *
  * Props:
- *   query        {string}        valor actual del input
- *   onQuery      {Function}      callback(nuevoQuery)
- *   tipoFiltro   {string|null}   tipo activo para filtrar
- *   onTipoFiltro {Function}      callback(tipo|null)
- *   resultados   {Array}         lista de lugares enriquecidos (ya filtrados)
- *   todosLugares {Array}         lista completa para derivar tipos disponibles
- *   onSeleccion  {Function}      callback(lugar)
- *   favoritos    {Set<string>}   IDs marcados como favorito
- *   recientes    {Array}         lugares vistos recientemente
+ *   query         {string}        valor actual del input
+ *   onQuery       {Function}      callback(nuevoQuery)
+ *   tiposFiltro   {string[]}      tipos activos para filtrar (OR)
+ *   onTiposFiltro {Function}      callback(tipos[])
+ *   resultados    {Array}         lista de lugares enriquecidos (ya filtrados)
+ *   todosLugares  {Array}         lista completa para derivar tipos disponibles
+ *   onSeleccion   {Function}      callback(lugar)
+ *   favoritos     {Set<string>}   IDs marcados como favorito
+ *   recientes     {Array}         lugares vistos recientemente
  */
 import { html } from 'htm/preact';
 import { useRef, useMemo } from 'preact/hooks';
-import { getBreadcrumb, getIconoTipo, TIPO_ICONO } from '../lib/campus.js';
+import { getBreadcrumb, getIconoTipo } from '../lib/campus.js';
+import { segmentarResaltado } from '../lib/search.js';
 
 export function SearchBar({
   query, onQuery,
-  tipoFiltro, onTipoFiltro,
+  tiposFiltro, onTiposFiltro,
   resultados, todosLugares,
   onSeleccion,
   favoritos, recientes,
@@ -30,7 +31,13 @@ export function SearchBar({
   function handleKey(e, lugar) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSeleccion(lugar); }
   }
-  function toggleTipo(tipo) { onTipoFiltro(tipoFiltro === tipo ? null : tipo); }
+  function toggleTipo(tipo) {
+    onTiposFiltro(
+      tiposFiltro.includes(tipo)
+        ? tiposFiltro.filter((t) => t !== tipo)
+        : [...tiposFiltro, tipo],
+    );
+  }
 
   // Tipos únicos disponibles en el campus, para los chips de filtro
   const tiposDisponibles = useMemo(
@@ -39,7 +46,8 @@ export function SearchBar({
   );
 
   const queryActiva = query.trim().length > 0;
-  const mostrarResultados = resultados.length > 0 && (queryActiva || tipoFiltro);
+  const filtrosActivos = tiposFiltro.length > 0;
+  const mostrarResultados = resultados.length > 0 && (queryActiva || filtrosActivos);
 
   // Favoritos y recientes como listas de objetos
   const lugaresFavoritos = useMemo(
@@ -47,7 +55,9 @@ export function SearchBar({
     [todosLugares, favoritos],
   );
 
-  const mostrarSugerencias = !queryActiva && !tipoFiltro;
+  const mostrarSugerencias = !queryActiva && !filtrosActivos;
+
+  const tiposFiltroTexto = tiposFiltro.join(', ');
 
   return html`
     <div class="search-container">
@@ -80,10 +90,10 @@ export function SearchBar({
         ${tiposDisponibles.map((tipo) => html`
           <button
             key=${tipo}
-            class=${`filter-chip${tipoFiltro === tipo ? ' filter-chip--activo' : ''}`}
+            class=${`filter-chip${tiposFiltro.includes(tipo) ? ' filter-chip--activo' : ''}`}
             type="button"
             onClick=${() => toggleTipo(tipo)}
-            aria-pressed=${tipoFiltro === tipo}
+            aria-pressed=${tiposFiltro.includes(tipo)}
           >
             ${getIconoTipo(tipo)} ${tipo}
           </button>
@@ -94,19 +104,25 @@ export function SearchBar({
       ${mostrarResultados && html`
         <ul class="result-list" role="listbox" aria-label="Resultados de búsqueda">
           ${resultados.map((lugar) => html`
-            <${ResultItem} key=${lugar.id} lugar=${lugar} onSeleccion=${onSeleccion} handleKey=${handleKey} />
+            <${ResultItem}
+              key=${lugar.id}
+              lugar=${lugar}
+              query=${queryActiva ? query : ''}
+              onSeleccion=${onSeleccion}
+              handleKey=${handleKey}
+            />
           `)}
         </ul>
       `}
 
       <!-- Sin resultados -->
-      ${!mostrarResultados && (queryActiva || tipoFiltro) && html`
+      ${!mostrarResultados && (queryActiva || filtrosActivos) && html`
         <div class="search-empty">
           <span aria-hidden="true" style="font-size: 2rem">🔍</span>
           <strong class="search-empty-title">Sin resultados</strong>
           ${queryActiva
-            ? html`<span>No encontré "<span class="mono">${query}</span>"${tipoFiltro ? ` en tipo "${tipoFiltro}"` : ''}</span>`
-            : html`<span>No hay lugares del tipo <strong>${tipoFiltro}</strong></span>`
+            ? html`<span>No encontré "<span class="mono">${query}</span>"${filtrosActivos ? ` en tipo${tiposFiltro.length > 1 ? 's' : ''} "${tiposFiltroTexto}"` : ''}</span>`
+            : html`<span>No hay lugares de tipo <strong>${tiposFiltroTexto}</strong></span>`
           }
           <small>Probá con el número de aula, el nombre de la oficina o "baño".</small>
         </div>
@@ -150,7 +166,20 @@ export function SearchBar({
   `;
 }
 
-function ResultItem({ lugar, onSeleccion, handleKey }) {
+function HighlightedText({ text, query }) {
+  const segmentos = segmentarResaltado(text, query);
+  return html`
+    <span class="result-nombre">
+      ${segmentos.map((seg, i) => (
+        seg.highlight
+          ? html`<mark key=${i} class="search-highlight">${seg.text}</mark>`
+          : seg.text
+      ))}
+    </span>
+  `;
+}
+
+function ResultItem({ lugar, query = '', onSeleccion, handleKey }) {
   return html`
     <li
       class="result-item"
@@ -161,7 +190,7 @@ function ResultItem({ lugar, onSeleccion, handleKey }) {
     >
       <span class="result-icono" aria-hidden="true">${getIconoTipo(lugar.tipo)}</span>
       <span class="result-info">
-        <span class="result-nombre">${lugar.nombre}</span>
+        <${HighlightedText} text=${lugar.nombre} query=${query} />
         <span class="result-breadcrumb mono">${getBreadcrumb(lugar)}</span>
       </span>
       <span class="badge badge--tipo badge--${lugar.tipo}" aria-hidden="true">${lugar.tipo}</span>

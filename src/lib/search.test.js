@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizarQuery, crearBuscador, buscar } from './search.js';
+import { normalizarQuery, crearBuscador, buscar, filtrarLugares, segmentarResaltado } from './search.js';
 
 // Datos mínimos de campus para las pruebas
 const LUGARES = [
@@ -39,9 +39,9 @@ describe('normalizarQuery', () => {
 describe('buscar', () => {
   const fuse = crearBuscador(LUGARES);
 
-  it('devuelve todos cuando el query está vacío', () => {
+  it('devuelve vacío cuando el query está vacío y no hay filtros', () => {
     const r = buscar(fuse, '', LUGARES);
-    expect(r).toHaveLength(LUGARES.length);
+    expect(r).toHaveLength(0);
   });
 
   it('encuentra por nombre exacto', () => {
@@ -67,5 +67,74 @@ describe('buscar', () => {
   it('busca por tipo', () => {
     const r = buscar(fuse, 'laboratorio', LUGARES);
     expect(r.some((l) => l.tipo === 'laboratorio')).toBe(true);
+  });
+});
+
+describe('filtrarLugares', () => {
+  const fuse = crearBuscador(LUGARES);
+
+  it('devuelve vacío sin query ni filtros', () => {
+    expect(filtrarLugares(fuse, '', LUGARES)).toHaveLength(0);
+  });
+
+  it('devuelve todos los lugares del tipo con filtro y sin query', () => {
+    const r = filtrarLugares(fuse, '', LUGARES, ['bano']);
+    expect(r).toHaveLength(1);
+    expect(r[0].id).toBe('bano-pb');
+  });
+
+  it('combina varios tipos con lógica OR', () => {
+    const r = filtrarLugares(fuse, '', LUGARES, ['bano', 'laboratorio']);
+    expect(r).toHaveLength(2);
+    expect(r.map((l) => l.id).sort()).toEqual(['bano-pb', 'lab-01']);
+  });
+
+  it('refina por texto dentro del tipo filtrado', () => {
+    const r = filtrarLugares(fuse, '101', LUGARES, ['aula']);
+    expect(r).toHaveLength(1);
+    expect(r[0].id).toBe('a-101');
+  });
+
+  it('no devuelve resultados fuera del tipo filtrado', () => {
+    const r = filtrarLugares(fuse, 'laboratorio', LUGARES, ['aula']);
+    expect(r).toHaveLength(0);
+  });
+});
+
+describe('segmentarResaltado', () => {
+  it('devuelve un segmento sin highlight si el query está vacío', () => {
+    expect(segmentarResaltado('Aula 101', '')).toEqual([
+      { text: 'Aula 101', highlight: false },
+    ]);
+  });
+
+  it('resalta coincidencia exacta', () => {
+    expect(segmentarResaltado('Aula 101', '101')).toEqual([
+      { text: 'Aula ', highlight: false },
+      { text: '101', highlight: true },
+    ]);
+  });
+
+  it('es insensible a acentos', () => {
+    expect(segmentarResaltado('Baño PB', 'bano')).toEqual([
+      { text: 'Baño', highlight: true },
+      { text: ' PB', highlight: false },
+    ]);
+  });
+
+  it('resalta múltiples ocurrencias', () => {
+    expect(segmentarResaltado('Aula A', 'a')).toEqual([
+      { text: 'A', highlight: true },
+      { text: 'ul', highlight: false },
+      { text: 'a', highlight: true },
+      { text: ' ', highlight: false },
+      { text: 'A', highlight: true },
+    ]);
+  });
+
+  it('devuelve texto sin highlight si no hay match', () => {
+    expect(segmentarResaltado('Laboratorio 01', 'xyz')).toEqual([
+      { text: 'Laboratorio 01', highlight: false },
+    ]);
   });
 });

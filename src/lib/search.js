@@ -5,9 +5,11 @@
  * Normaliza el query (lowercase + sin acentos) antes de buscar.
  *
  * Exporta:
- *   crearBuscador(lugares)   → instancia de Fuse lista para usar
- *   buscar(fuse, query)      → Array de lugares enriquecidos (máx. MAX_RESULTADOS)
- *   normalizarQuery(query)   → string normalizado (uso interno, exportado para tests)
+ *   crearBuscador(lugares)      → instancia de Fuse lista para usar
+ *   filtrarLugares(...)         → filtro por tipo + búsqueda difusa
+ *   buscar(fuse, query, ...)    → alias de filtrarLugares sin filtros de tipo
+ *   normalizarQuery(query)      → string normalizado (uso interno, exportado para tests)
+ *   segmentarResaltado(texto, query) → segmentos para highlight en UI
  */
 
 import Fuse from 'fuse.js';
@@ -36,7 +38,56 @@ export function normalizarQuery(str) {
   return str
     .toLowerCase()
     .normalize('NFD')                  // descompone acentos
-    .replace(/[̀-ͯ]/g, ''); // elimina marcas diacríticas
+    .replace(/[\u0300-\u036f]/g, ''); // elimina marcas diacríticas
+}
+
+/**
+ * Divide texto en segmentos para resaltar coincidencias con query.
+ * Insensible a acentos y mayúsculas; preserva el texto original en cada segmento.
+ *
+ * @param {string} texto
+ * @param {string} query
+ * @returns {Array<{ text: string, highlight: boolean }>}
+ */
+export function segmentarResaltado(texto, query) {
+  const q = normalizarQuery(query.trim());
+  if (!q) return [{ text: texto, highlight: false }];
+
+  const map = [];
+  let norm = '';
+  for (let i = 0; i < texto.length; i++) {
+    const n = normalizarQuery(texto[i]);
+    for (const c of n) {
+      norm += c;
+      map.push(i);
+    }
+  }
+
+  const segments = [];
+  let normPos = 0;
+  let origCursor = 0;
+
+  while (normPos < norm.length) {
+    const matchIdx = norm.indexOf(q, normPos);
+    if (matchIdx === -1) {
+      if (origCursor < texto.length) {
+        segments.push({ text: texto.slice(origCursor), highlight: false });
+      }
+      break;
+    }
+
+    const matchStartOrig = map[matchIdx];
+    const matchEndOrig = map[matchIdx + q.length - 1] + 1;
+
+    if (matchStartOrig > origCursor) {
+      segments.push({ text: texto.slice(origCursor, matchStartOrig), highlight: false });
+    }
+    segments.push({ text: texto.slice(matchStartOrig, matchEndOrig), highlight: true });
+    origCursor = matchEndOrig;
+    normPos = matchIdx + q.length;
+  }
+
+  return segments.length > 0 ? segments : [{ text: texto, highlight: false }];
 }
 
 /**
@@ -58,18 +109,47 @@ export function crearBuscador(lugares) {
 }
 
 /**
- * Ejecuta la búsqueda y devuelve hasta MAX_RESULTADOS lugares enriquecidos.
- * Con query vacío devuelve todos los lugares (útil para mostrar sugerencias).
+ * Filtra por tipo(s) y/o busca por texto. Orden: filtro de tipo → búsqueda difusa.
+ *
+ * - Sin query ni filtros → []
+ * - Sin query con filtros → todos los lugares de esos tipos
+ * - Con query → hasta MAX_RESULTADOS matches (dentro de los tipos si hay filtros)
+ *
+ * @param {Fuse}     fuse
+ * @param {string}   query
+ * @param {Array}    todosLugares
+ * @param {string[]} [tiposFiltro=[]]
+ * @returns {Array} Lugares enriquecidos
+ */
+export function filtrarLugares(fuse, query, todosLugares, tiposFiltro = []) {
+  const tiposSet = new Set(tiposFiltro);
+  const hayFiltro = tiposSet.size > 0;
+  const candidatos = hayFiltro
+    ? todosLugares.filter((l) => tiposSet.has(l.tipo))
+    : todosLugares;
+
+  const q = normalizarQuery(query.trim());
+
+  if (!q) {
+    return hayFiltro ? candidatos : [];
+  }
+
+  const idsPermitidos = hayFiltro ? new Set(candidatos.map((c) => c.id)) : null;
+  return fuse
+    .search(q, { limit: hayFiltro ? 50 : MAX_RESULTADOS })
+    .map((r) => r.item)
+    .filter((item) => !idsPermitidos || idsPermitidos.has(item.id))
+    .slice(0, MAX_RESULTADOS);
+}
+
+/**
+ * Búsqueda difusa sin filtros de tipo (compatibilidad y tests).
  *
  * @param {Fuse}   fuse
  * @param {string} query
- * @param {Array}  todosLugares - lista original, para devolver todos si query vacío
+ * @param {Array}  todosLugares
  * @returns {Array} Lugares enriquecidos
  */
 export function buscar(fuse, query, todosLugares) {
-  const q = normalizarQuery(query.trim());
-  if (!q) return todosLugares.slice(0, MAX_RESULTADOS);
-  return fuse
-    .search(q, { limit: MAX_RESULTADOS })
-    .map((r) => r.item);
+  return filtrarLugares(fuse, query, todosLugares, []);
 }

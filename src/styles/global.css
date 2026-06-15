@@ -390,6 +390,14 @@ html, body {
   text-overflow: ellipsis;
 }
 
+.result-nombre .search-highlight {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-weight: 700;
+}
+
 .result-breadcrumb {
   font-size: var(--text-xs);
   color: var(--color-text-muted);

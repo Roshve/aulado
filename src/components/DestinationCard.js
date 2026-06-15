@@ -11,7 +11,6 @@
 import { html } from 'htm/preact';
 import { useState } from 'preact/hooks';
 import { getIconoTipo } from '../lib/campus.js';
-import { linkDirecciones } from '../lib/geo.js';
 
 export function DestinationCard({ lugar, onVerPlano, onVolver, esFavorito, onToggleFavorito }) {
   const icono = getIconoTipo(lugar.tipo);
@@ -78,15 +77,6 @@ export function DestinationCard({ lugar, onVerPlano, onVolver, esFavorito, onTog
         >
           🗺️ Ver plano del piso
         </button>
-
-        <a
-          class="btn-secondary btn-link"
-          href=${linkDirecciones(lugar.edificioEntrada)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📍 Cómo llegar al edificio
-        </a>
 
         <button
           class=${`btn-secondary btn-favorito${esFavorito ? ' btn-favorito--activo' : ''}`}
