@@ -18,7 +18,7 @@ import { useState, useMemo, useEffect } from 'preact/hooks';
 
 import campusData from '../data/campus.json';
 import { aplanarLugares, getLugarById } from '../lib/campus.js';
-import { crearBuscador, filtrarLugares } from '../lib/search.js';
+import { crearBuscador, filtrarLugares, agregarAliasBusqueda } from '../lib/search.js';
 import { getFavoritos, toggleFavorito } from '../lib/favorites.js';
 import { agregarReciente, getRecientes } from '../lib/recents.js';
 import { SearchBar } from './SearchBar.js';
@@ -26,7 +26,7 @@ import { DestinationCard } from './DestinationCard.js';
 import { FloorPlanViewer } from './FloorPlanViewer.js';
 
 // Preparar datos una sola vez (fuera del componente: no recalcular en cada render).
-const todosLugares = aplanarLugares(campusData);
+const todosLugares = aplanarLugares(campusData).map(agregarAliasBusqueda);
 const fuse = crearBuscador(todosLugares);
 
 /** Lee el hash actual y retorna { vista, id } o null si no hay hash válido. */

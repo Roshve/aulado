@@ -10,6 +10,7 @@
  *   buscar(fuse, query, ...)    → alias de filtrarLugares sin filtros de tipo
  *   normalizarQuery(query)      → string normalizado (uso interno, exportado para tests)
  *   segmentarResaltado(texto, query) → segmentos para highlight en UI
+ *   agregarAliasBusqueda(lugar) → enriquece lugar con aliasBusqueda[]
  */
 
 import Fuse from 'fuse.js';
@@ -22,10 +23,14 @@ const FUSE_THRESHOLD = 0.4;
 const FUSE_KEYS = [
   { name: 'nombre',         weight: 0.5 },
   { name: 'sinonimos',      weight: 0.35 },
+  { name: 'aliasBusqueda',  weight: 0.4 },
   { name: 'tipo',           weight: 0.05 },
   { name: 'edificioNombre', weight: 0.05 },
   { name: 'edificioApodos', weight: 0.05 },
 ];
+
+const RE_CODIGO_TEXTO = /\b([a-z]+)[-\s]?(\d+)\b/g;
+const RE_CODIGO_TEXTO_ORIG = /\b([a-zA-Z]+)[-\s]?(\d+)\b/g;
 
 /**
  * Normaliza una cadena: lowercase y reemplaza caracteres con diacríticos.
@@ -42,17 +47,119 @@ export function normalizarQuery(str) {
 }
 
 /**
- * Divide texto en segmentos para resaltar coincidencias con query.
- * Insensible a acentos y mayúsculas; preserva el texto original en cada segmento.
+ * Compacta un código: minúsculas, sin acentos, espacios ni guiones.
  *
+ * @param {string} str
+ * @returns {string}
+ */
+export function compactarCodigo(str) {
+  return normalizarQuery(str).replace(/[\s-]/g, '');
+}
+
+/**
+ * Genera variantes de un código letra+número (s01 → s1, s01, s-01, s 01).
+ *
+ * @param {string} compact - código ya compactado
+ * @returns {string[]}
+ */
+export function variantesCodigo(compact) {
+  if (!compact) return [];
+
+  const m = compact.match(/^([a-z]+)(\d+)$/);
+  if (!m) return [compact];
+
+  const [, prefix, numStr] = m;
+  const n = parseInt(numStr, 10);
+  const unpadded = String(n);
+  const padded = String(n).padStart(2, '0');
+
+  return [
+    `${prefix}${unpadded}`,
+    `${prefix}${padded}`,
+    `${prefix}-${padded}`,
+    `${prefix} ${padded}`,
+  ];
+}
+
+/**
+ * Extrae códigos letra+número embebidos en un texto ("Aula S-01" → ["s01"]).
+ *
+ * @param {string} str
+ * @returns {string[]}
+ */
+export function extraerCodigosDeTexto(str) {
+  const norm = normalizarQuery(str);
+  const codes = [];
+  for (const m of norm.matchAll(RE_CODIGO_TEXTO)) {
+    codes.push(`${m[1]}${m[2]}`);
+  }
+  return codes;
+}
+
+/**
+ * @param {string} a
+ * @param {string} b
+ * @returns {boolean}
+ */
+function sonCodigosEquivalentes(a, b) {
+  const varsA = new Set(variantesCodigo(compactarCodigo(a)));
+  const varsB = new Set(variantesCodigo(compactarCodigo(b)));
+  for (const v of varsA) {
+    if (varsB.has(v)) return true;
+  }
+  return false;
+}
+
+/**
+ * @param {Object} lugar
+ * @returns {string[]}
+ */
+export function generarAliasBusqueda(lugar) {
+  const alias = new Set();
+
+  function agregarDesdeTexto(src) {
+    if (!src) return;
+    for (const code of extraerCodigosDeTexto(src)) {
+      for (const v of variantesCodigo(code)) alias.add(v);
+    }
+  }
+
+  function agregarCodigoDirecto(src) {
+    if (!src) return;
+    for (const v of variantesCodigo(compactarCodigo(src))) alias.add(v);
+  }
+
+  agregarCodigoDirecto(lugar.id);
+  agregarDesdeTexto(lugar.nombre);
+
+  for (const sin of lugar.sinonimos ?? []) {
+    const compact = compactarCodigo(sin);
+    if (/^\d+$/.test(compact)) {
+      alias.add(compact);
+    } else if (/^[a-z]+\d+$/.test(compact)) {
+      agregarCodigoDirecto(sin);
+    } else {
+      agregarDesdeTexto(sin);
+    }
+  }
+
+  return [...alias];
+}
+
+/**
+ * @param {Object} lugar
+ * @returns {Object}
+ */
+export function agregarAliasBusqueda(lugar) {
+  return { ...lugar, aliasBusqueda: generarAliasBusqueda(lugar) };
+}
+
+/**
  * @param {string} texto
- * @param {string} query
+ * @param {string} q - query ya normalizado
  * @returns {Array<{ text: string, highlight: boolean }>}
  */
-export function segmentarResaltado(texto, query) {
-  const q = normalizarQuery(query.trim());
-  if (!q) return [{ text: texto, highlight: false }];
-
+function segmentarLiteral(texto, q) {
   const map = [];
   let norm = '';
   for (let i = 0; i < texto.length; i++) {
@@ -88,6 +195,57 @@ export function segmentarResaltado(texto, query) {
   }
 
   return segments.length > 0 ? segments : [{ text: texto, highlight: false }];
+}
+
+/**
+ * @param {string} texto
+ * @param {string} query
+ * @returns {Array<{ text: string, highlight: boolean }>}
+ */
+function segmentarPorCodigo(texto, query) {
+  const segments = [];
+  let lastIndex = 0;
+
+  for (const match of texto.matchAll(RE_CODIGO_TEXTO_ORIG)) {
+    const start = match.index;
+    const end = start + match[0].length;
+
+    if (!sonCodigosEquivalentes(match[0], query)) continue;
+
+    if (start > lastIndex) {
+      segments.push({ text: texto.slice(lastIndex, start), highlight: false });
+    }
+    segments.push({ text: texto.slice(start, end), highlight: true });
+    lastIndex = end;
+  }
+
+  if (lastIndex < texto.length) {
+    segments.push({ text: texto.slice(lastIndex), highlight: false });
+  }
+
+  return segments.length > 0 ? segments : [{ text: texto, highlight: false }];
+}
+
+/**
+ * Divide texto en segmentos para resaltar coincidencias con query.
+ * Insensible a acentos y mayúsculas; preserva el texto original en cada segmento.
+ * Si no hay match literal, prueba equivalencia de códigos (s1 ↔ S-01).
+ *
+ * @param {string} texto
+ * @param {string} query
+ * @returns {Array<{ text: string, highlight: boolean }>}
+ */
+export function segmentarResaltado(texto, query) {
+  const q = normalizarQuery(query.trim());
+  if (!q) return [{ text: texto, highlight: false }];
+
+  const literal = segmentarLiteral(texto, q);
+  if (literal.some((s) => s.highlight)) return literal;
+
+  const porCodigo = segmentarPorCodigo(texto, query);
+  if (porCodigo.some((s) => s.highlight)) return porCodigo;
+
+  return literal;
 }
 
 /**
