@@ -11,8 +11,8 @@ export default defineConfig({
         name: 'Aulado — Navegación de campus',
         short_name: 'Aulado',
         description: 'Encontrá aulas, oficinas y espacios en el campus rápido y sin conexión.',
-        theme_color: '#1a6fd8',
-        background_color: '#f5f7fa',
+        theme_color: '#3B82F6',
+        background_color: '#f0f4ff',
         display: 'standalone',
         start_url: '/aulado/',
         lang: 'es',
@@ -40,6 +40,23 @@ export default defineConfig({
         // Los planos y datos se cachean con NetworkFirst para que
         // la primera visita funcione y posteriores visitas offline también.
         runtimeCaching: [
+          // Futuristic design system — Google Fonts offline support
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'aulado-google-fonts-stylesheets',
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'aulado-google-fonts-webfonts',
+              expiration: { maxEntries: 30, maxAgeSeconds: 365 * 24 * 60 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           {
             urlPattern: /\/planos\/.+\.(svg|png)$/,
             handler: 'CacheFirst',
@@ -62,5 +79,12 @@ export default defineConfig({
   // Alias para que los imports sean limpios (opcional en este proyecto pequeño).
   resolve: {
     alias: {},
+  },
+  // Configuración de Vitest
+  test: {
+    environment: 'node',
+    env: {
+      BASE_URL: '/',
+    },
   },
 });

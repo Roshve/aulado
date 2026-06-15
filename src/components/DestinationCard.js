@@ -1,22 +1,33 @@
 /**
  * DestinationCard.js — ficha del destino seleccionado.
  *
- * Muestra: nombre, ubicación ("Edificio B — Piso 2"), tipo e íconos.
- * Botones:
- *   - "Ver plano"    → activo (Fase 2)
- *   - "Cómo llegar" → stub deshabilitado (Fase 3)
- *   - "Favorito"    → stub deshabilitado (Fase 4)
- *
  * Props:
- *   lugar     {Object}   lugar enriquecido (ver lib/campus.js)
- *   onVerPlano {Function} callback para abrir el FloorPlanViewer
- *   onVolver   {Function} callback para volver al buscador
+ *   lugar            {Object}   lugar enriquecido (ver lib/campus.js)
+ *   onVerPlano       {Function} callback para abrir el FloorPlanViewer
+ *   onVolver         {Function} callback para volver al buscador
+ *   esFavorito       {boolean}  true si el lugar está guardado como favorito
+ *   onToggleFavorito {Function} callback(id) para marcar/desmarcar
  */
 import { html } from 'htm/preact';
+import { useState } from 'preact/hooks';
 import { getIconoTipo } from '../lib/campus.js';
+import { linkDirecciones } from '../lib/geo.js';
 
-export function DestinationCard({ lugar, onVerPlano, onVolver }) {
+export function DestinationCard({ lugar, onVerPlano, onVolver, esFavorito, onToggleFavorito }) {
   const icono = getIconoTipo(lugar.tipo);
+  const [copiado, setCopiado] = useState(false);
+
+  function handleCompartir() {
+    const url = location.href;
+    if (navigator.share) {
+      navigator.share({ title: lugar.nombre, text: `${lugar.nombre} — ${lugar.pisoEtiqueta}`, url });
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopiado(true);
+        setTimeout(() => setCopiado(false), 2000);
+      });
+    }
+  }
 
   return html`
     <div class="destination-card">
@@ -32,8 +43,9 @@ export function DestinationCard({ lugar, onVerPlano, onVolver }) {
         <div>
           <h1 class="card-nombre">${lugar.nombre}</h1>
           <p class="card-ubicacion">
-            ${lugar.edificioNombre} — ${lugar.pisoEtiqueta}
+            ${lugar.edificioNombre} — <span class="mono">${lugar.pisoEtiqueta}</span>
           </p>
+          <span class="badge badge--tipo badge--${lugar.tipo}">${lugar.tipo}</span>
         </div>
       </div>
 
@@ -48,7 +60,7 @@ export function DestinationCard({ lugar, onVerPlano, onVolver }) {
         </div>
         <div class="card-meta-row">
           <dt>Piso</dt>
-          <dd>${lugar.pisoEtiqueta}</dd>
+          <dd class="mono">${lugar.pisoEtiqueta}</dd>
         </div>
         ${lugar.edificioApodos?.length && html`
           <div class="card-meta-row">
@@ -67,24 +79,31 @@ export function DestinationCard({ lugar, onVerPlano, onVolver }) {
           🗺️ Ver plano del piso
         </button>
 
-        <!-- Fase 3: habilitar cuando se implemente GPS -->
-        <button
-          class="btn-secondary"
-          type="button"
-          disabled
-          title="Disponible próximamente"
+        <a
+          class="btn-secondary btn-link"
+          href=${linkDirecciones(lugar.edificioEntrada)}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           📍 Cómo llegar al edificio
+        </a>
+
+        <button
+          class=${`btn-secondary btn-favorito${esFavorito ? ' btn-favorito--activo' : ''}`}
+          type="button"
+          onClick=${() => onToggleFavorito(lugar.id)}
+          aria-pressed=${esFavorito}
+          aria-label=${esFavorito ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+        >
+          ${esFavorito ? '★ Guardado en favoritos' : '☆ Guardar en favoritos'}
         </button>
 
-        <!-- Fase 4: habilitar cuando se implemente favoritos -->
         <button
           class="btn-secondary"
           type="button"
-          disabled
-          title="Disponible próximamente"
+          onClick=${handleCompartir}
         >
-          ☆ Guardar en favoritos
+          ${copiado ? '✓ Link copiado' : '🔗 Compartir'}
         </button>
       </div>
     </div>

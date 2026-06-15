@@ -1,36 +1,53 @@
 /**
- * SearchBar.js — input de búsqueda + lista de resultados.
+ * SearchBar.js — input de búsqueda + filtros por tipo + lista de resultados.
  *
  * Props:
- *   query       {string}   valor actual del input
- *   onQuery     {Function} callback(nuevoQuery)
- *   resultados  {Array}    lista de lugares enriquecidos
- *   onSeleccion {Function} callback(lugar)
+ *   query        {string}        valor actual del input
+ *   onQuery      {Function}      callback(nuevoQuery)
+ *   tipoFiltro   {string|null}   tipo activo para filtrar
+ *   onTipoFiltro {Function}      callback(tipo|null)
+ *   resultados   {Array}         lista de lugares enriquecidos (ya filtrados)
+ *   todosLugares {Array}         lista completa para derivar tipos disponibles
+ *   onSeleccion  {Function}      callback(lugar)
+ *   favoritos    {Set<string>}   IDs marcados como favorito
+ *   recientes    {Array}         lugares vistos recientemente
  */
 import { html } from 'htm/preact';
-import { useRef } from 'preact/hooks';
-import { getBreadcrumb, getIconoTipo } from '../lib/campus.js';
+import { useRef, useMemo } from 'preact/hooks';
+import { getBreadcrumb, getIconoTipo, TIPO_ICONO } from '../lib/campus.js';
 
-export function SearchBar({ query, onQuery, resultados, onSeleccion }) {
+export function SearchBar({
+  query, onQuery,
+  tipoFiltro, onTipoFiltro,
+  resultados, todosLugares,
+  onSeleccion,
+  favoritos, recientes,
+}) {
   const inputRef = useRef(null);
 
-  function handleInput(e) {
-    onQuery(e.target.value);
-  }
-
-  function handleClear() {
-    onQuery('');
-    inputRef.current?.focus();
-  }
-
+  function handleInput(e) { onQuery(e.target.value); }
+  function handleClear() { onQuery(''); inputRef.current?.focus(); }
   function handleKey(e, lugar) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onSeleccion(lugar);
-    }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSeleccion(lugar); }
   }
+  function toggleTipo(tipo) { onTipoFiltro(tipoFiltro === tipo ? null : tipo); }
 
-  const mostrarResultados = resultados.length > 0;
+  // Tipos únicos disponibles en el campus, para los chips de filtro
+  const tiposDisponibles = useMemo(
+    () => [...new Set(todosLugares.map((l) => l.tipo))].sort(),
+    [todosLugares],
+  );
+
+  const queryActiva = query.trim().length > 0;
+  const mostrarResultados = resultados.length > 0 && (queryActiva || tipoFiltro);
+
+  // Favoritos y recientes como listas de objetos
+  const lugaresFavoritos = useMemo(
+    () => todosLugares.filter((l) => favoritos.has(l.id)),
+    [todosLugares, favoritos],
+  );
+
+  const mostrarSugerencias = !queryActiva && !tipoFiltro;
 
   return html`
     <div class="search-container">
@@ -58,34 +75,97 @@ export function SearchBar({ query, onQuery, resultados, onSeleccion }) {
         `}
       </div>
 
+      <!-- Chips de filtro por tipo -->
+      <div class="filter-chips" role="group" aria-label="Filtrar por tipo">
+        ${tiposDisponibles.map((tipo) => html`
+          <button
+            key=${tipo}
+            class=${`filter-chip${tipoFiltro === tipo ? ' filter-chip--activo' : ''}`}
+            type="button"
+            onClick=${() => toggleTipo(tipo)}
+            aria-pressed=${tipoFiltro === tipo}
+          >
+            ${getIconoTipo(tipo)} ${tipo}
+          </button>
+        `)}
+      </div>
+
+      <!-- Resultados de búsqueda activa o filtro -->
       ${mostrarResultados && html`
         <ul class="result-list" role="listbox" aria-label="Resultados de búsqueda">
           ${resultados.map((lugar) => html`
-            <li
-              key=${lugar.id}
-              class="result-item"
-              role="option"
-              tabIndex="0"
-              onClick=${() => onSeleccion(lugar)}
-              onKeyDown=${(e) => handleKey(e, lugar)}
-            >
-              <span class="result-icono" aria-hidden="true">${getIconoTipo(lugar.tipo)}</span>
-              <span class="result-info">
-                <span class="result-nombre">${lugar.nombre}</span>
-                <span class="result-breadcrumb">${getBreadcrumb(lugar)}</span>
-              </span>
-              <span class="result-chevron" aria-hidden="true">›</span>
-            </li>
+            <${ResultItem} key=${lugar.id} lugar=${lugar} onSeleccion=${onSeleccion} handleKey=${handleKey} />
           `)}
         </ul>
       `}
 
-      ${!mostrarResultados && query.trim() && html`
+      <!-- Sin resultados -->
+      ${!mostrarResultados && (queryActiva || tipoFiltro) && html`
         <div class="search-empty">
-          No encontré "${query}" en el campus.
+          <span aria-hidden="true" style="font-size: 2rem">🔍</span>
+          <strong class="search-empty-title">Sin resultados</strong>
+          ${queryActiva
+            ? html`<span>No encontré "<span class="mono">${query}</span>"${tipoFiltro ? ` en tipo "${tipoFiltro}"` : ''}</span>`
+            : html`<span>No hay lugares del tipo <strong>${tipoFiltro}</strong></span>`
+          }
           <small>Probá con el número de aula, el nombre de la oficina o "baño".</small>
         </div>
       `}
+
+      <!-- Estado vacío: Favoritos + Recientes -->
+      ${mostrarSugerencias && html`
+        <div class="sugerencias">
+          ${lugaresFavoritos.length > 0 && html`
+            <section class="sugerencias-seccion">
+              <h2 class="sugerencias-titulo">⭐ Favoritos</h2>
+              <ul class="result-list" role="listbox" aria-label="Tus favoritos">
+                ${lugaresFavoritos.map((lugar) => html`
+                  <${ResultItem} key=${lugar.id} lugar=${lugar} onSeleccion=${onSeleccion} handleKey=${handleKey} />
+                `)}
+              </ul>
+            </section>
+          `}
+
+          ${recientes.length > 0 && html`
+            <section class="sugerencias-seccion">
+              <h2 class="sugerencias-titulo">🕘 Visitados recientemente</h2>
+              <ul class="result-list" role="listbox" aria-label="Visitados recientemente">
+                ${recientes.map((lugar) => html`
+                  <${ResultItem} key=${lugar.id} lugar=${lugar} onSeleccion=${onSeleccion} handleKey=${handleKey} />
+                `)}
+              </ul>
+            </section>
+          `}
+
+          ${lugaresFavoritos.length === 0 && recientes.length === 0 && html`
+            <div class="search-empty search-empty--inicio">
+              <span aria-hidden="true" style="font-size: 2rem">🎓</span>
+              <strong class="search-empty-title">Encontrá tu aula</strong>
+              <span>Escribí el número de aula, nombre de oficina o tipo de espacio.</span>
+            </div>
+          `}
+        </div>
+      `}
     </div>
+  `;
+}
+
+function ResultItem({ lugar, onSeleccion, handleKey }) {
+  return html`
+    <li
+      class="result-item"
+      role="option"
+      tabIndex="0"
+      onClick=${() => onSeleccion(lugar)}
+      onKeyDown=${(e) => handleKey(e, lugar)}
+    >
+      <span class="result-icono" aria-hidden="true">${getIconoTipo(lugar.tipo)}</span>
+      <span class="result-info">
+        <span class="result-nombre">${lugar.nombre}</span>
+        <span class="result-breadcrumb mono">${getBreadcrumb(lugar)}</span>
+      </span>
+      <span class="badge badge--tipo badge--${lugar.tipo}" aria-hidden="true">${lugar.tipo}</span>
+      <span class="result-chevron" aria-hidden="true">›</span>
+    </li>
   `;
 }

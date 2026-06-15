@@ -32,6 +32,13 @@ export function resolveAsset(path) {
 export function aplanarLugares(data) {
   const lista = [];
   for (const edificio of data.edificios) {
+    // Lista resumida de pisos del edificio para el selector en FloorPlanViewer
+    const edificioPisos = edificio.pisos.map((p) => ({
+      numero: p.numero,
+      etiqueta: p.etiqueta,
+      plano: resolveAsset(p.plano),
+    }));
+
     for (const piso of edificio.pisos) {
       for (const lugar of piso.lugares) {
         lista.push({
@@ -45,7 +52,8 @@ export function aplanarLugares(data) {
           edificioId: edificio.id,
           edificioNombre: edificio.nombre,
           edificioApodos: edificio.apodos,
-          // Referencia completa para Fases 3+ (GPS a la entrada)
+          edificioPisos,                  // ← todos los pisos del edificio (Fase C)
+          // Referencia completa para GPS a la entrada
           edificioEntrada: edificio.entrada,
         });
       }
