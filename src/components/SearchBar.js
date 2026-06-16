@@ -2,15 +2,18 @@
  * SearchBar.js — input de búsqueda + filtros por tipo + lista de resultados.
  *
  * Props:
- *   query         {string}        valor actual del input
- *   onQuery       {Function}      callback(nuevoQuery)
- *   tiposFiltro   {string[]}      tipos activos para filtrar (OR)
- *   onTiposFiltro {Function}      callback(tipos[])
- *   resultados    {Array}         lista de lugares enriquecidos (ya filtrados)
- *   todosLugares  {Array}         lista completa para derivar tipos disponibles
- *   onSeleccion   {Function}      callback(lugar)
- *   favoritos     {Set<string>}   IDs marcados como favorito
- *   recientes     {Array}         lugares vistos recientemente
+ *   query            {string}        valor actual del input
+ *   onQuery          {Function}      callback(nuevoQuery)
+ *   tiposFiltro      {string[]}      tipos activos para filtrar (OR)
+ *   onTiposFiltro    {Function}      callback(tipos[])
+ *   resultados       {Array}         lista de lugares enriquecidos (ya filtrados)
+ *   todosLugares     {Array}         lista completa para derivar tipos disponibles
+ *   onSeleccion      {Function}      callback(lugar)
+ *   favoritos        {Set<string>}   IDs marcados como favorito
+ *   recientes        {Array}         lugares vistos recientemente
+ *   paradas          {Array}         lista de paradas (mini-itinerario)
+ *   onToggleParada   {Function}      callback(id) para agregar/quitar parada
+ *   onLimpiarParadas {Function}      callback para vaciar todas las paradas
  */
 import { html } from 'htm/preact';
 import { useRef, useMemo } from 'preact/hooks';
@@ -23,6 +26,7 @@ export function SearchBar({
   resultados, todosLugares,
   onSeleccion,
   favoritos, recientes,
+  paradas, onToggleParada, onLimpiarParadas,
 }) {
   const inputRef = useRef(null);
 
@@ -45,11 +49,24 @@ export function SearchBar({
     [todosLugares],
   );
 
+  // Resultados agrupados por tipo (solo cuando hay >1 tipo activo)
+  const resultadosAgrupados = useMemo(() => {
+    if (tiposFiltro.length <= 1) return null;
+    const byTipo = {};
+    for (const tipo of tiposFiltro) byTipo[tipo] = [];
+    for (const lugar of resultados) {
+      if (byTipo[lugar.tipo] !== undefined) byTipo[lugar.tipo].push(lugar);
+    }
+    return tiposFiltro
+      .map((tipo) => ({ tipo, items: byTipo[tipo] || [] }))
+      .filter((g) => g.items.length > 0);
+  }, [resultados, tiposFiltro]);
+
   const queryActiva = query.trim().length > 0;
   const filtrosActivos = tiposFiltro.length > 0;
   const mostrarResultados = resultados.length > 0 && (queryActiva || filtrosActivos);
 
-  // Favoritos y recientes como listas de objetos
+  // Favoritos como lista de objetos
   const lugaresFavoritos = useMemo(
     () => todosLugares.filter((l) => favoritos.has(l.id)),
     [todosLugares, favoritos],
@@ -61,59 +78,101 @@ export function SearchBar({
 
   return html`
     <div class="search-container">
-      <div class="search-input-wrap">
-        <span class="search-icon" aria-hidden="true">🔍</span>
-        <input
-          ref=${inputRef}
-          class="search-input"
-          type="search"
-          placeholder="Buscar aula, oficina, baño…"
-          value=${query}
-          onInput=${handleInput}
-          aria-label="Buscar destino en el campus"
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-        />
-        ${query && html`
-          <button
-            class="search-clear"
-            onClick=${handleClear}
-            aria-label="Limpiar búsqueda"
-            type="button"
-          >✕</button>
-        `}
-      </div>
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input
+            ref=${inputRef}
+            class="search-input"
+            type="search"
+            placeholder="Buscar aula, oficina, baño…"
+            value=${query}
+            onInput=${handleInput}
+            aria-label="Buscar destino en el campus"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+          />
+          ${query && html`
+            <button
+              class="search-clear"
+              onClick=${handleClear}
+              aria-label="Limpiar búsqueda"
+              type="button"
+            >✕</button>
+          `}
+        </div>
 
-      <!-- Chips de filtro por tipo -->
-      <div class="filter-chips" role="group" aria-label="Filtrar por tipo">
-        ${tiposDisponibles.map((tipo) => html`
-          <button
-            key=${tipo}
-            class=${`filter-chip${tiposFiltro.includes(tipo) ? ' filter-chip--activo' : ''}`}
-            type="button"
-            onClick=${() => toggleTipo(tipo)}
-            aria-pressed=${tiposFiltro.includes(tipo)}
-          >
-            ${getIconoTipo(tipo)} ${tipo}
-          </button>
-        `)}
-      </div>
-
-      <!-- Resultados de búsqueda activa o filtro -->
-      ${mostrarResultados && html`
-        <ul class="result-list" role="listbox" aria-label="Resultados de búsqueda">
-          ${resultados.map((lugar) => html`
-            <${ResultItem}
-              key=${lugar.id}
-              lugar=${lugar}
-              query=${queryActiva ? query : ''}
-              onSeleccion=${onSeleccion}
-              handleKey=${handleKey}
-            />
+        <!-- Chips de filtro por tipo -->
+        <div class="filter-chips" role="group" aria-label="Filtrar por tipo">
+          ${tiposDisponibles.map((tipo) => html`
+            <button
+              key=${tipo}
+              class=${`filter-chip${tiposFiltro.includes(tipo) ? ' filter-chip--activo' : ''}`}
+              type="button"
+              onClick=${() => toggleTipo(tipo)}
+              aria-pressed=${tiposFiltro.includes(tipo)}
+            >
+              ${getIconoTipo(tipo)} ${tipo}
+            </button>
           `)}
-        </ul>
+          ${filtrosActivos && html`
+            <button
+              class="filter-chip-clear"
+              type="button"
+              onClick=${() => onTiposFiltro([])}
+              aria-label="Limpiar filtros activos"
+            >✕ Limpiar</button>
+          `}
+        </div>
+      </div>
+
+      <!-- Contador de resultados -->
+      ${mostrarResultados && html`
+        <p class="result-count" aria-live="polite">
+          ${resultados.length} resultado${resultados.length === 1 ? '' : 's'}${filtrosActivos ? ` · ${tiposFiltroTexto}` : ''}
+        </p>
       `}
+
+      <!-- Resultados: plana o agrupada por tipo -->
+      ${mostrarResultados && (resultadosAgrupados
+        ? html`
+          <div class="result-grupos">
+            ${resultadosAgrupados.map(({ tipo, items }) => html`
+              <section key=${tipo} class="result-grupo">
+                <h2 class="result-grupo-titulo">
+                  ${getIconoTipo(tipo)} ${tipo}
+                  <span class="result-grupo-count">${items.length}</span>
+                </h2>
+                <ul class="result-list" role="listbox" aria-label=${'Resultados: ' + tipo}>
+                  ${items.map((lugar) => html`
+                    <${ResultItem}
+                      key=${lugar.id}
+                      lugar=${lugar}
+                      query=${queryActiva ? query : ''}
+                      onSeleccion=${onSeleccion}
+                      handleKey=${handleKey}
+                    />
+                  `)}
+                </ul>
+              </section>
+            `)}
+          </div>
+        `
+        : html`
+          <ul class="result-list" role="listbox" aria-label="Resultados de búsqueda">
+            ${resultados.map((lugar) => html`
+              <${ResultItem}
+                key=${lugar.id}
+                lugar=${lugar}
+                query=${queryActiva ? query : ''}
+                onSeleccion=${onSeleccion}
+                handleKey=${handleKey}
+              />
+            `)}
+          </ul>
+        `
+      )}
 
       <!-- Sin resultados -->
       ${!mostrarResultados && (queryActiva || filtrosActivos) && html`
@@ -128,9 +187,34 @@ export function SearchBar({
         </div>
       `}
 
-      <!-- Estado vacío: Favoritos + Recientes -->
+      <!-- Estado vacío: Mis paradas + Favoritos + Recientes -->
       ${mostrarSugerencias && html`
         <div class="sugerencias">
+          ${paradas.length > 0 && html`
+            <section class="sugerencias-seccion">
+              <div class="sugerencias-titulo-row">
+                <h2 class="sugerencias-titulo">🧭 Mis paradas</h2>
+                <button
+                  class="sugerencias-limpiar"
+                  type="button"
+                  onClick=${onLimpiarParadas}
+                  aria-label="Limpiar todas las paradas"
+                >Limpiar</button>
+              </div>
+              <ul class="result-list" role="listbox" aria-label="Mis paradas">
+                ${paradas.map((lugar) => html`
+                  <${ResultItem}
+                    key=${lugar.id}
+                    lugar=${lugar}
+                    onSeleccion=${onSeleccion}
+                    handleKey=${handleKey}
+                    onQuitar=${() => onToggleParada(lugar.id)}
+                  />
+                `)}
+              </ul>
+            </section>
+          `}
+
           ${lugaresFavoritos.length > 0 && html`
             <section class="sugerencias-seccion">
               <h2 class="sugerencias-titulo">⭐ Favoritos</h2>
@@ -153,7 +237,7 @@ export function SearchBar({
             </section>
           `}
 
-          ${lugaresFavoritos.length === 0 && recientes.length === 0 && html`
+          ${lugaresFavoritos.length === 0 && recientes.length === 0 && paradas.length === 0 && html`
             <div class="search-empty search-empty--inicio">
               <span aria-hidden="true" style="font-size: 2rem">🎓</span>
               <strong class="search-empty-title">Encontrá tu aula</strong>
@@ -179,7 +263,7 @@ function HighlightedText({ text, query }) {
   `;
 }
 
-function ResultItem({ lugar, query = '', onSeleccion, handleKey }) {
+function ResultItem({ lugar, query = '', onSeleccion, handleKey, onQuitar }) {
   return html`
     <li
       class="result-item"
@@ -194,7 +278,15 @@ function ResultItem({ lugar, query = '', onSeleccion, handleKey }) {
         <span class="result-breadcrumb mono">${getBreadcrumb(lugar)}</span>
       </span>
       <span class="badge badge--tipo badge--${lugar.tipo}" aria-hidden="true">${lugar.tipo}</span>
-      <span class="result-chevron" aria-hidden="true">›</span>
+      ${onQuitar
+        ? html`<button
+            class="parada-quitar"
+            type="button"
+            onClick=${(e) => { e.stopPropagation(); onQuitar(); }}
+            aria-label=${'Quitar ' + lugar.nombre + ' de mis paradas'}
+          >✕</button>`
+        : html`<span class="result-chevron" aria-hidden="true">›</span>`
+      }
     </li>
   `;
 }

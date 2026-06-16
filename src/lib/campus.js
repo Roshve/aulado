@@ -32,7 +32,7 @@ export function resolveAsset(path) {
 export function aplanarLugares(data) {
   const lista = [];
   for (const edificio of data.edificios) {
-    // Lista resumida de pisos del edificio para el selector en FloorPlanViewer
+    // Lista resumida de pisos del edificio (metadata enriquecida por lugar)
     const edificioPisos = edificio.pisos.map((p) => ({
       numero: p.numero,
       etiqueta: p.etiqueta,
@@ -102,4 +102,37 @@ export const TIPO_ICONO = {
 
 export function getIconoTipo(tipo) {
   return TIPO_ICONO[tipo] ?? TIPO_ICONO.default;
+}
+
+/**
+ * Devuelve la lista de pisos del campus ordenada por número ascendente,
+ * con el plano resuelto contra el base de Vite.
+ *
+ * @param {Object} data - JSON completo del campus
+ * @returns {Array<{numero: number, etiqueta: string, plano: string}>}
+ */
+export function listarPisos(data) {
+  const pisos = [];
+  for (const edificio of data.edificios) {
+    for (const piso of edificio.pisos) {
+      pisos.push({
+        numero: piso.numero,
+        etiqueta: piso.etiqueta,
+        plano: resolveAsset(piso.plano),
+      });
+    }
+  }
+  return pisos.sort((a, b) => a.numero - b.numero);
+}
+
+/**
+ * Dado un array de pisos (resultado de listarPisos) y un número de piso,
+ * devuelve la URL resuelta del plano, o undefined si no existe.
+ *
+ * @param {Array<{numero: number, plano: string}>} pisos
+ * @param {number} numero
+ * @returns {string|undefined}
+ */
+export function getPlanoPorPiso(pisos, numero) {
+  return pisos.find((p) => p.numero === numero)?.plano;
 }

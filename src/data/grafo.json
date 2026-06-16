@@ -1,0 +1,856 @@
+{
+  "meta": {
+    "version": 2,
+    "escalaPx": {
+      "ancho": 3000,
+      "alto": 2122
+    }
+  },
+  "pisos": {
+    "0": {
+      "nodos": [
+        {
+          "id": "n1",
+          "x": 43.1,
+          "y": 89.2,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n4",
+          "x": 44.8,
+          "y": 83.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n10",
+          "x": 35.6,
+          "y": 83.9,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n14",
+          "x": 15.6,
+          "y": 88.3,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n24",
+          "x": 52.5,
+          "y": 90.7,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n26",
+          "x": 78.4,
+          "y": 71.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n27",
+          "x": 77.6,
+          "y": 60.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n29",
+          "x": 44.5,
+          "y": 46.7,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n31",
+          "x": 74,
+          "y": 46.8,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n32",
+          "x": 41.4,
+          "y": 38.7,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n34",
+          "x": 44.2,
+          "y": 38.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n39",
+          "x": 35.9,
+          "y": 38.2,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n41",
+          "x": 32,
+          "y": 5.9,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n43",
+          "x": 16.9,
+          "y": 13.8,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n46",
+          "x": 50.2,
+          "y": 8.8,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n48",
+          "x": 67.6,
+          "y": 8.8,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n54",
+          "x": 88.9,
+          "y": 9.1,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n58",
+          "x": 88.9,
+          "y": 40.4,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n61",
+          "x": 92.4,
+          "y": 42.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n68",
+          "x": 88.7,
+          "y": 78.2,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n72",
+          "x": 81.5,
+          "y": 72.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n82",
+          "x": 16.9,
+          "y": 5.9,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n83",
+          "x": 6.9,
+          "y": 7.2,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n85",
+          "x": 36.1,
+          "y": 10,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n89",
+          "x": 48.2,
+          "y": 37.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n92",
+          "x": 85.4,
+          "y": 6.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n93",
+          "x": 81.7,
+          "y": 66,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n94",
+          "x": 88.7,
+          "y": 67.3,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n96",
+          "x": 44.9,
+          "y": 71.3,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n101",
+          "x": 24.6,
+          "y": 87.9,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n103",
+          "x": 28.5,
+          "y": 82.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n109",
+          "x": 6.9,
+          "y": 87.9,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n114",
+          "x": 38.7,
+          "y": 48.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "n115",
+          "x": 15.7,
+          "y": 79.8,
+          "tipo": "interseccion"
+        }
+      ],
+      "aristas": [
+        [
+          "n24",
+          "n1"
+        ],
+        [
+          "n1",
+          "n4"
+        ],
+        [
+          "n24",
+          "n4"
+        ],
+        [
+          "n4",
+          "n10"
+        ],
+        [
+          "n29",
+          "n34"
+        ],
+        [
+          "n34",
+          "n32"
+        ],
+        [
+          "n29",
+          "n31"
+        ],
+        [
+          "n32",
+          "n39"
+        ],
+        [
+          "n39",
+          "n41"
+        ],
+        [
+          "n39",
+          "n43"
+        ],
+        [
+          "n41",
+          "n82"
+        ],
+        [
+          "n82",
+          "n43"
+        ],
+        [
+          "n82",
+          "n83"
+        ],
+        [
+          "n34",
+          "n89"
+        ],
+        [
+          "n85",
+          "n46"
+        ],
+        [
+          "n41",
+          "n85"
+        ],
+        [
+          "n39",
+          "n85"
+        ],
+        [
+          "n46",
+          "n89"
+        ],
+        [
+          "n89",
+          "n58"
+        ],
+        [
+          "n46",
+          "n48"
+        ],
+        [
+          "n48",
+          "n92"
+        ],
+        [
+          "n92",
+          "n54"
+        ],
+        [
+          "n54",
+          "n58"
+        ],
+        [
+          "n58",
+          "n61"
+        ],
+        [
+          "n58",
+          "n94"
+        ],
+        [
+          "n94",
+          "n68"
+        ],
+        [
+          "n94",
+          "n93"
+        ],
+        [
+          "n93",
+          "n72"
+        ],
+        [
+          "n93",
+          "n27"
+        ],
+        [
+          "n96",
+          "n29"
+        ],
+        [
+          "n96",
+          "n4"
+        ],
+        [
+          "n96",
+          "n26"
+        ],
+        [
+          "n10",
+          "n103"
+        ],
+        [
+          "n103",
+          "n101"
+        ],
+        [
+          "n101",
+          "n14"
+        ],
+        [
+          "n109",
+          "n14"
+        ],
+        [
+          "n29",
+          "n114"
+        ],
+        [
+          "n115",
+          "n14"
+        ],
+        [
+          "pb-hall",
+          "n24"
+        ],
+        [
+          "pb-ascensor",
+          "n10"
+        ]
+      ]
+    },
+    "1": {
+      "nodos": [
+        {
+          "id": "p1-n1",
+          "x": 15,
+          "y": 88,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n2",
+          "x": 35,
+          "y": 88,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n3",
+          "x": 15,
+          "y": 72,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n4",
+          "x": 44,
+          "y": 76,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n5",
+          "x": 82,
+          "y": 76,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n6",
+          "x": 88,
+          "y": 76,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n7",
+          "x": 88,
+          "y": 42,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n8",
+          "x": 88,
+          "y": 12,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n9",
+          "x": 52,
+          "y": 12,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n10",
+          "x": 15,
+          "y": 12,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n11",
+          "x": 15,
+          "y": 42,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n12",
+          "x": 52,
+          "y": 42,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n13",
+          "x": 26,
+          "y": 38,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p1-n14",
+          "x": 83,
+          "y": 38,
+          "tipo": "interseccion"
+        }
+      ],
+      "aristas": [
+        [
+          "p1-n1",
+          "p1-n2"
+        ],
+        [
+          "p1-n1",
+          "p1-n10"
+        ],
+        [
+          "p1-n1",
+          "p1-n11"
+        ],
+        [
+          "p1-n3",
+          "p1-n10"
+        ],
+        [
+          "p1-n3",
+          "p1-n11"
+        ],
+        [
+          "p1-ascensor",
+          "p1-n3"
+        ],
+        [
+          "p1-n4",
+          "p1-n5"
+        ],
+        [
+          "p1-n4",
+          "p1-n6"
+        ],
+        [
+          "p1-n6",
+          "p1-n7"
+        ],
+        [
+          "p1-n6",
+          "p1-n8"
+        ],
+        [
+          "p1-n7",
+          "p1-n8"
+        ],
+        [
+          "p1-n7",
+          "p1-n11"
+        ],
+        [
+          "p1-n7",
+          "p1-n12"
+        ],
+        [
+          "p1-n8",
+          "p1-n10"
+        ],
+        [
+          "p1-n9",
+          "p1-n10"
+        ],
+        [
+          "p1-n9",
+          "p1-n12"
+        ],
+        [
+          "p1-n10",
+          "p1-n11"
+        ],
+        [
+          "p1-n13",
+          "p1-n14"
+        ]
+      ]
+    },
+    "2": {
+      "nodos": [
+        {
+          "id": "p2-n1",
+          "x": 13,
+          "y": 90,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n2",
+          "x": 35,
+          "y": 90,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n3",
+          "x": 13,
+          "y": 72,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n4",
+          "x": 13,
+          "y": 81,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n5",
+          "x": 38,
+          "y": 81,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n6",
+          "x": 81,
+          "y": 81,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n7",
+          "x": 88,
+          "y": 81,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n8",
+          "x": 88,
+          "y": 58,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n9",
+          "x": 88,
+          "y": 12,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n10",
+          "x": 45,
+          "y": 12,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "p2-n11",
+          "x": 13,
+          "y": 11,
+          "tipo": "interseccion"
+        }
+      ],
+      "aristas": [
+        [
+          "p2-n1",
+          "p2-n2"
+        ],
+        [
+          "p2-n1",
+          "p2-n3"
+        ],
+        [
+          "p2-n1",
+          "p2-n4"
+        ],
+        [
+          "p2-n1",
+          "p2-n11"
+        ],
+        [
+          "p2-n3",
+          "p2-n4"
+        ],
+        [
+          "p2-n3",
+          "p2-n11"
+        ],
+        [
+          "p2-ascensor",
+          "p2-n3"
+        ],
+        [
+          "p2-n4",
+          "p2-n5"
+        ],
+        [
+          "p2-n4",
+          "p2-n6"
+        ],
+        [
+          "p2-n4",
+          "p2-n7"
+        ],
+        [
+          "p2-n4",
+          "p2-n11"
+        ],
+        [
+          "p2-n5",
+          "p2-n6"
+        ],
+        [
+          "p2-n5",
+          "p2-n7"
+        ],
+        [
+          "p2-n7",
+          "p2-n9"
+        ],
+        [
+          "p2-n8",
+          "p2-n9"
+        ],
+        [
+          "p2-n9",
+          "p2-n10"
+        ]
+      ]
+    },
+    "-1": {
+      "nodos": [
+        {
+          "id": "s-n1",
+          "x": 34,
+          "y": 64.2,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n2",
+          "x": 38.2,
+          "y": 64.2,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n3",
+          "x": 38.2,
+          "y": 57.7,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n4",
+          "x": 38.2,
+          "y": 51.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n5",
+          "x": 38.2,
+          "y": 11.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n6",
+          "x": 54.8,
+          "y": 51.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n7",
+          "x": 54.8,
+          "y": 33.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n8",
+          "x": 58.7,
+          "y": 33.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n9",
+          "x": 60.6,
+          "y": 33.5,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n10",
+          "x": 58.7,
+          "y": 11.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n11",
+          "x": 76.1,
+          "y": 11.6,
+          "tipo": "interseccion"
+        },
+        {
+          "id": "s-n12",
+          "x": 76.2,
+          "y": 51.5,
+          "tipo": "interseccion"
+        }
+      ],
+      "aristas": [
+        [
+          "s-ascensor",
+          "s-n3"
+        ],
+        [
+          "s-escalera",
+          "s-n1"
+        ],
+        [
+          "s-n1",
+          "s-n2"
+        ],
+        [
+          "s-n10",
+          "s-n11"
+        ],
+        [
+          "s-n10",
+          "s-n5"
+        ],
+        [
+          "s-n10",
+          "s-n8"
+        ],
+        [
+          "s-n11",
+          "s-n12"
+        ],
+        [
+          "s-n12",
+          "s-n6"
+        ],
+        [
+          "s-n2",
+          "s-n3"
+        ],
+        [
+          "s-n3",
+          "s-n4"
+        ],
+        [
+          "s-n4",
+          "s-n5"
+        ],
+        [
+          "s-n4",
+          "s-n6"
+        ],
+        [
+          "s-n6",
+          "s-n7"
+        ],
+        [
+          "s-n7",
+          "s-n8"
+        ],
+        [
+          "s-n8",
+          "s-n9"
+        ],
+        [
+          "s-escalera-2",
+          "s-n9"
+        ]
+      ]
+    }
+  },
+  "verticales": [
+    {
+      "tipo": "ascensor",
+      "nodos": [
+        "s-ascensor",
+        "pb-ascensor",
+        "p1-ascensor",
+        "p2-ascensor"
+      ],
+      "costoFijo": 20,
+      "accesible": true
+    },
+    {
+      "tipo": "escalera",
+      "nodos": [
+        "s-escalera",
+        "n1",
+        "p1-n3",
+        "p2-n3"
+      ],
+      "costoFijo": 12,
+      "accesible": false
+    },
+    {
+      "tipo": "escalera",
+      "nodos": [
+        "s-escalera-2",
+        "n58",
+        "p1-n9",
+        "p2-n9"
+      ],
+      "costoFijo": 12,
+      "accesible": false
+    }
+  ]
+}

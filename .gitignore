@@ -3,3 +3,15 @@ dist/
 .DS_Store
 *.local
 .claude/
+scripts/preview/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.Python
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/

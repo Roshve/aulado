@@ -1,18 +1,20 @@
 /**
- * DestinationCard.js — ficha del destino seleccionado.
+ * DestinationCard.js — ficha del destino, estilo Google Maps.
  *
  * Props:
- *   lugar            {Object}   lugar enriquecido (ver lib/campus.js)
- *   onVerPlano       {Function} callback para abrir el FloorPlanViewer
- *   onVolver         {Function} callback para volver al buscador
- *   esFavorito       {boolean}  true si el lugar está guardado como favorito
- *   onToggleFavorito {Function} callback(id) para marcar/desmarcar
+ *   lugar            {Object}
+ *   onComoLlegar     {Function}
+ *   onVolver         {Function}
+ *   esFavorito       {boolean}
+ *   onToggleFavorito {Function}
+ *   esParada         {boolean}
+ *   onToggleParada   {Function}
  */
 import { html } from 'htm/preact';
 import { useState } from 'preact/hooks';
 import { getIconoTipo } from '../lib/campus.js';
 
-export function DestinationCard({ lugar, onVerPlano, onVolver, esFavorito, onToggleFavorito }) {
+export function DestinationCard({ lugar, onComoLlegar, onVolver, esFavorito, onToggleFavorito, esParada, onToggleParada }) {
   const icono = getIconoTipo(lugar.tipo);
   const [copiado, setCopiado] = useState(false);
 
@@ -30,25 +32,72 @@ export function DestinationCard({ lugar, onVerPlano, onVolver, esFavorito, onTog
 
   return html`
     <div class="destination-card">
-      <button
-        class="btn-back"
-        onClick=${onVolver}
-        type="button"
-        aria-label="Volver al buscador"
-      >← Buscador</button>
 
-      <div class="card-header">
-        <span class="card-icono" aria-hidden="true">${icono}</span>
-        <div>
-          <h1 class="card-nombre">${lugar.nombre}</h1>
-          <p class="card-ubicacion">
-            ${lugar.edificioNombre} — <span class="mono">${lugar.pisoEtiqueta}</span>
+      <!-- Header compacto -->
+      <div class="card-place-header">
+        <button
+          class="card-back-btn"
+          onClick=${onVolver}
+          type="button"
+          aria-label="Volver al buscador"
+        >✕</button>
+        <span class="card-place-icon" aria-hidden="true">${icono}</span>
+        <div class="card-place-info">
+          <h1 class="card-place-nombre">${lugar.nombre}</h1>
+          <p class="card-place-sub">
+            <span class="badge badge--tipo badge--${lugar.tipo}">${lugar.tipo}</span>
+            ${' '} ${lugar.edificioNombre} · ${lugar.pisoEtiqueta}
           </p>
-          <span class="badge badge--tipo badge--${lugar.tipo}">${lugar.tipo}</span>
         </div>
       </div>
 
-      <dl class="card-meta">
+      <!-- Fila de botones icono -->
+      <div class="card-action-row">
+        <button
+          class="card-action-btn card-action-btn--primary"
+          type="button"
+          onClick=${onComoLlegar}
+          aria-label="Cómo llegar"
+        >
+          <span class="card-action-icon">🧭</span>
+          <span class="card-action-label">Cómo llegar</span>
+        </button>
+
+        <button
+          class=${`card-action-btn${esFavorito ? ' card-action-btn--active' : ''}`}
+          type="button"
+          onClick=${() => onToggleFavorito(lugar.id)}
+          aria-pressed=${esFavorito}
+          aria-label=${esFavorito ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+        >
+          <span class="card-action-icon">${esFavorito ? '★' : '☆'}</span>
+          <span class="card-action-label">${esFavorito ? 'Guardado' : 'Guardar'}</span>
+        </button>
+
+        <button
+          class=${`card-action-btn${esParada ? ' card-action-btn--active-green' : ''}`}
+          type="button"
+          onClick=${() => onToggleParada(lugar.id)}
+          aria-pressed=${esParada}
+          aria-label=${esParada ? 'Quitar de paradas' : 'Agregar a paradas'}
+        >
+          <span class="card-action-icon">${esParada ? '✓' : '📍'}</span>
+          <span class="card-action-label">${esParada ? 'En paradas' : 'Parada'}</span>
+        </button>
+
+        <button
+          class="card-action-btn"
+          type="button"
+          onClick=${handleCompartir}
+          aria-label="Compartir"
+        >
+          <span class="card-action-icon">${copiado ? '✓' : '🔗'}</span>
+          <span class="card-action-label">${copiado ? 'Copiado' : 'Compartir'}</span>
+        </button>
+      </div>
+
+      <!-- Meta info -->
+      <dl class="card-meta card-meta-compact">
         <div class="card-meta-row">
           <dt>Tipo</dt>
           <dd>${lugar.tipo.charAt(0).toUpperCase() + lugar.tipo.slice(1)}</dd>
@@ -68,34 +117,6 @@ export function DestinationCard({ lugar, onVerPlano, onVolver, esFavorito, onTog
           </div>
         `}
       </dl>
-
-      <div class="card-actions">
-        <button
-          class="btn-primary"
-          onClick=${onVerPlano}
-          type="button"
-        >
-          🗺️ Ver plano del piso
-        </button>
-
-        <button
-          class=${`btn-secondary btn-favorito${esFavorito ? ' btn-favorito--activo' : ''}`}
-          type="button"
-          onClick=${() => onToggleFavorito(lugar.id)}
-          aria-pressed=${esFavorito}
-          aria-label=${esFavorito ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-        >
-          ${esFavorito ? '★ Guardado en favoritos' : '☆ Guardar en favoritos'}
-        </button>
-
-        <button
-          class="btn-secondary"
-          type="button"
-          onClick=${handleCompartir}
-        >
-          ${copiado ? '✓ Link copiado' : '🔗 Compartir'}
-        </button>
-      </div>
     </div>
   `;
 }

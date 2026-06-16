@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { aplanarLugares, getLugarById, getBreadcrumb } from './campus.js';
+import { aplanarLugares, getLugarById, getBreadcrumb, listarPisos, getPlanoPorPiso } from './campus.js';
 // import.meta.env.BASE_URL se configura en vite.config.js → test.env
 
 const CAMPUS_MOCK = {
@@ -79,5 +79,37 @@ describe('getBreadcrumb', () => {
     const lista = aplanarLugares(CAMPUS_MOCK);
     const l = lista[0];
     expect(getBreadcrumb(l)).toBe('Edificio Test · Planta Baja · aula');
+  });
+});
+
+describe('listarPisos', () => {
+  const pisos = listarPisos(CAMPUS_MOCK);
+
+  it('devuelve un piso por cada piso del edificio', () => {
+    expect(pisos).toHaveLength(2);
+  });
+
+  it('ordena por número de piso ascendente', () => {
+    expect(pisos.map((p) => p.numero)).toEqual([0, 1]);
+  });
+
+  it('incluye etiqueta y plano resuelto', () => {
+    expect(pisos[0].etiqueta).toBe('Planta Baja');
+    // resolveAsset en test env: BASE_URL = '/' → '/planos/pb.png'
+    expect(pisos[0].plano).toContain('pb.png');
+    expect(pisos[1].plano).toContain('p1.png');
+  });
+});
+
+describe('getPlanoPorPiso', () => {
+  const pisos = listarPisos(CAMPUS_MOCK);
+
+  it('devuelve el plano del piso solicitado', () => {
+    expect(getPlanoPorPiso(pisos, 0)).toContain('pb.png');
+    expect(getPlanoPorPiso(pisos, 1)).toContain('p1.png');
+  });
+
+  it('devuelve undefined para un número de piso que no existe', () => {
+    expect(getPlanoPorPiso(pisos, 99)).toBeUndefined();
   });
 });
